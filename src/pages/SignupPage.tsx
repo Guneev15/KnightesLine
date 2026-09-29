@@ -3,6 +3,7 @@ import { Crown, Sparkles, CheckCircle2, ArrowRight, Target, Flame } from 'lucide
 import confetti from 'canvas-confetti';
 import { shatranjStore } from '../services/store';
 import { audioService } from '../services/audioService';
+import { api } from '../services/api';
 
 interface SignupPageProps {
   onNavigate: (path: string) => void;
@@ -28,13 +29,34 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onNavigate }) => {
     audioService.playMove();
   };
 
-  const handleFinishOnboarding = () => {
-    // Update store with newly onboarded student details
-    shatranjStore.updateUser({
-      name,
-      email,
-      learningGoal: goal,
-    });
+  const handleFinishOnboarding = async () => {
+    try {
+      const res = await api.auth.register({
+        name,
+        email,
+        password: password || 'password123',
+        role: 'student',
+      });
+      if (res.user) {
+        shatranjStore.loginWithUser({
+          ...res.user,
+          learningGoal: goal,
+        });
+      } else {
+        shatranjStore.updateUser({
+          name,
+          email,
+          learningGoal: goal,
+        });
+      }
+    } catch {
+      shatranjStore.updateUser({
+        name,
+        email,
+        learningGoal: goal,
+      });
+    }
+
     audioService.playVictory();
 
     try {

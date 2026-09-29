@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Crown, Mail, Lock, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
+import { Crown, Mail, Lock, ShieldCheck, ArrowRight, Sparkles, Loader2, AlertCircle } from 'lucide-react';
 import { shatranjStore } from '../services/store';
 import { audioService } from '../services/audioService';
+import { api } from '../services/api';
 import { UserRole } from '../types';
 
 interface LoginPageProps {
@@ -11,44 +12,80 @@ interface LoginPageProps {
 export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleRoleQuickLogin = (role: UserRole) => {
-    shatranjStore.setRole(role);
-    audioService.playMove();
-
+  const navigateByRole = (role: UserRole) => {
     if (role === 'student') onNavigate('student-dashboard');
     else if (role === 'parent') onNavigate('parent-dashboard');
     else if (role === 'coach') onNavigate('coach-dashboard');
     else if (role === 'admin') onNavigate('admin-dashboard');
   };
 
-  const handleStandardSubmit = (e: React.FormEvent) => {
+  const handleRoleQuickLogin = async (role: UserRole) => {
+    setIsLoading(true);
+    setErrorMsg('');
+    try {
+      const res = await api.auth.quickLoginByRole(role);
+      if (res.user) {
+        shatranjStore.loginWithUser(res.user);
+      } else {
+        shatranjStore.setRole(role);
+      }
+    } catch {
+      // Graceful fallback to client store
+      shatranjStore.setRole(role);
+    } finally {
+      setIsLoading(false);
+      audioService.playMove();
+      navigateByRole(role);
+    }
+  };
+
+  const handleStandardSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
-    if (email.includes('admin')) handleRoleQuickLogin('admin');
-    else if (email.includes('coach')) handleRoleQuickLogin('coach');
-    else if (email.includes('parent')) handleRoleQuickLogin('parent');
-    else {
-      const namePart = email.split('@')[0];
-      const displayName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
-      shatranjStore.loginWithUser({
-        id: 'usr_' + Date.now(),
-        name: displayName,
-        email,
-        phone: '',
-        role: 'student',
-        avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
-        rating: 1200,
-        monthlyRatingDelta: 0,
-        streakDays: 1,
-        xp: 150,
-        level: 1,
-        subscriptionTier: 'starter',
-        badges: [],
-      });
-      audioService.playMove();
-      onNavigate('student-dashboard');
+    setIsLoading(true);
+    setErrorMsg('');
+
+    try {
+      const res = await api.auth.login(email, password || 'password123');
+      if (res.user) {
+        shatranjStore.loginWithUser(res.user);
+        audioService.playMove();
+        navigateByRole(res.user.role as UserRole);
+        return;
+      }
+    } catch (err: any) {
+      // If user doesn't exist, auto-register student or report error
+      if (err?.message?.includes('Invalid email or password')) {
+        setErrorMsg('Invalid email or password. Use password: password123 for demo accounts, or enter a new email to register.');
+      } else {
+        try {
+          const namePart = email.split('@')[0];
+          const displayName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+          const regRes = await api.auth.register({
+            name: displayName,
+            email,
+            password: password || 'password123',
+            role: 'student',
+          });
+          if (regRes.user) {
+            shatranjStore.loginWithUser(regRes.user);
+            audioService.playVictory();
+            navigateByRole('student');
+            return;
+          }
+        } catch {
+          // Client fallback
+          shatranjStore.setRole('student');
+          navigateByRole('student');
+          return;
+        }
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -142,12 +179,29 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
             />
           </div>
 
+          {errorMsg && (
+            <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-400 mt-0.5" />
+              <span>{errorMsg}</span>
+            </div>
+          )}
+
           <button
             type="submit"
-            className="w-full py-3 rounded-xl font-bold text-xs bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-md transition-all flex items-center justify-center gap-2"
+            disabled={isLoading}
+            className="w-full py-3 rounded-xl font-bold text-xs bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-slate-950 shadow-md transition-all flex items-center justify-center gap-2"
           >
-            <span>Sign In to Academy</span>
-            <ArrowRight className="w-4 h-4" />
+            {isLoading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Authenticating with Backend...</span>
+              </>
+            ) : (
+              <>
+                <span>Sign In to Academy</span>
+                <ArrowRight className="w-4 h-4" />
+              </>
+            )}
           </button>
         </form>
 

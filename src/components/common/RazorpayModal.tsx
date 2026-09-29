@@ -5,6 +5,7 @@ import { shatranjStore } from '../../services/store';
 import { audioService } from '../../services/audioService';
 import { SubscriptionPlan, PaymentRecord } from '../../types';
 import { RazorpayLogo, UpiLogo, VisaLogo, MastercardLogo, RupayLogo } from './PaymentLogos';
+import { api } from '../../services/api';
 
 interface RazorpayModalProps {
   isOpen: boolean;
@@ -34,18 +35,47 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
 
   const price = billingCycle === 'yearly' ? plan.yearlyPrice : plan.monthlyPrice;
 
-  const handlePay = (e: React.FormEvent) => {
+  const handlePay = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
     audioService.playMove();
 
-    setTimeout(() => {
-      setIsProcessing(false);
+    try {
+      // 1. Create Order on backend
+      const orderRes = await api.payments.createOrder({
+        planId: plan.id,
+        planName: plan.name,
+        amount: price,
+        billingCycle,
+      });
+
+      const paymentId = 'pay_' + Date.now();
+
+      // 2. Verify Payment on backend
+      const verifyRes = await api.payments.verifyPayment({
+        razorpay_order_id: orderRes.orderId,
+        razorpay_payment_id: paymentId,
+        planId: plan.id,
+        planName: `${plan.name} Academy Membership (${billingCycle})`,
+        amount: price,
+        billingCycle,
+        paymentMethod: method,
+      });
+
+      // 3. Save to local store and update subscription
       const payment = shatranjStore.addPayment(
         price,
         `${plan.name} Academy Membership (${billingCycle})`,
         method
       );
+
+      if (verifyRes?.user) {
+        shatranjStore.updateUser({
+          subscriptionTier: verifyRes.user.subscriptionTier,
+          subscriptionValidUntil: verifyRes.user.subscriptionValidUntil,
+        });
+      }
+
       setCompletedPayment(payment);
       audioService.playVictory();
 
@@ -54,14 +84,26 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
           particleCount: 100,
           spread: 80,
           origin: { y: 0.5 },
-          colors: ['#f59e0b', '#10b981', '#3b82f6']
+          colors: ['#f59e0b', '#10b981', '#3b82f6'],
         });
       } catch {}
 
       if (onPaymentSuccess) {
         onPaymentSuccess(payment);
       }
-    }, 1600);
+    } catch (err) {
+      console.warn('Backend payment flow fallback to simulated transaction', err);
+      const payment = shatranjStore.addPayment(
+        price,
+        `${plan.name} Academy Membership (${billingCycle})`,
+        method
+      );
+      setCompletedPayment(payment);
+      audioService.playVictory();
+      if (onPaymentSuccess) onPaymentSuccess(payment);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const handleClose = () => {

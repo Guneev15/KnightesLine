@@ -1,0 +1,147 @@
+{
+  "users": [
+    {
+      "id": "usr_student_01",
+      "name": "Aryan Sharma",
+      "email": "aryan.chess@gmail.com",
+      "passwordHash": "$2b$10$jrKdpCQ4p2qNnjXZD/R4aOYFpzoWlSaTHxA4bvMV1cla4VXnjxjqm",
+      "phone": "+91 98765 43210",
+      "role": "student",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "rating": 1248,
+      "monthlyRatingDelta": 86,
+      "streakDays": 7,
+      "xp": 2840,
+      "level": 14,
+      "subscriptionTier": "pro",
+      "subscriptionValidUntil": "2026-10-29",
+      "badges": [
+        {
+          "id": "b1",
+          "name": "Tactical Beast",
+          "description": "Solved 50 tactical puzzles with >80% accuracy",
+          "icon": "🧠",
+          "unlockedAt": "2026-09-15"
+        },
+        {
+          "id": "b2",
+          "name": "7-Day Streak",
+          "description": "Trained every single day for a week",
+          "icon": "🔥",
+          "unlockedAt": "2026-09-22"
+        }
+      ],
+      "learningGoal": "Cross 1500 rating and master the Italian Game",
+      "createdAt": "2026-09-29T15:47:29.429Z",
+      "updatedAt": "2026-09-29T15:48:16.057Z"
+    },
+    {
+      "id": "usr_parent_01",
+      "name": "Pooja Sharma",
+      "email": "pooja.sharma@yahoo.com",
+      "passwordHash": "$2b$10$jrKdpCQ4p2qNnjXZD/R4aOYFpzoWlSaTHxA4bvMV1cla4VXnjxjqm",
+      "phone": "+91 98765 43210",
+      "role": "parent",
+      "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80",
+      "rating": 0,
+      "monthlyRatingDelta": 0,
+      "streakDays": 7,
+      "xp": 1200,
+      "level": 1,
+      "subscriptionTier": "pro",
+      "parentLinkedChildId": "usr_student_01",
+      "badges": [],
+      "createdAt": "2026-09-29T15:47:29.429Z",
+      "updatedAt": "2026-09-29T15:47:29.429Z"
+    },
+    {
+      "id": "usr_coach_01",
+      "name": "IM Vikramaditya Rao",
+      "email": "vikram.im@knightesline.com",
+      "passwordHash": "$2b$10$jrKdpCQ4p2qNnjXZD/R4aOYFpzoWlSaTHxA4bvMV1cla4VXnjxjqm",
+      "phone": "+91 99887 76655",
+      "role": "coach",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+      "rating": 2410,
+      "monthlyRatingDelta": 12,
+      "streakDays": 45,
+      "xp": 15400,
+      "level": 32,
+      "subscriptionTier": "elite",
+      "coachTitle": "International Master",
+      "badges": [
+        {
+          "id": "cb1",
+          "name": "Master Trainer",
+          "description": "Coached over 300 students to national ratings",
+          "icon": "👑",
+          "unlockedAt": "2025-01-10"
+        }
+      ],
+      "createdAt": "2026-09-29T15:47:29.429Z",
+      "updatedAt": "2026-09-29T15:47:29.429Z"
+    },
+    {
+      "id": "usr_admin_01",
+      "name": "Devendra Singh",
+      "email": "admin@knightesline.com",
+      "passwordHash": "$2b$10$jrKdpCQ4p2qNnjXZD/R4aOYFpzoWlSaTHxA4bvMV1cla4VXnjxjqm",
+      "phone": "+91 98200 11223",
+      "role": "admin",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+      "rating": 2150,
+      "monthlyRatingDelta": 0,
+      "streakDays": 120,
+      "xp": 35000,
+      "level": 50,
+      "subscriptionTier": "elite",
+      "badges": [
+        {
+          "id": "ab1",
+          "name": "Platform Founder",
+          "description": "Building the next era of chess learning",
+          "icon": "⚡",
+          "unlockedAt": "2024-01-01"
+        }
+      ],
+      "createdAt": "2026-09-29T15:47:29.429Z",
+      "updatedAt": "2026-09-29T15:47:29.429Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "pay_1790696896056",
+      "userId": "usr_student_01",
+      "userEmail": "aryan.chess@gmail.com",
+      "userName": "Aryan Sharma",
+      "planId": "plan_pro",
+      "planName": "Pro Plan",
+      "billingCycle": "monthly",
+      "amount": 1499,
+      "currency": "INR",
+      "razorpayOrderId": "order_rzp_1790696896051",
+      "razorpayPaymentId": "pay_test_1790696896052",
+      "razorpaySignature": "",
+      "paymentMethod": "UPI",
+      "status": "completed",
+      "createdAt": "2026-09-29T15:48:16.056Z"
+    },
+    {
+      "id": "pay_demo_01",
+      "userId": "usr_student_01",
+      "userEmail": "aryan.chess@gmail.com",
+      "userName": "Aryan Sharma",
+      "planId": "plan_pro",
+      "planName": "Grandmaster Aspirant (Pro)",
+      "billingCycle": "monthly",
+      "amount": 1499,
+      "currency": "INR",
+      "razorpayOrderId": "order_demo_001",
+      "razorpayPaymentId": "pay_demo_rzp_001",
+      "paymentMethod": "UPI",
+      "status": "completed",
+      "createdAt": "2026-09-24T15:47:29.431Z"
+    }
+  ],
+  "trials": []
+}

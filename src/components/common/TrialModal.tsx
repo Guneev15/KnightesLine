@@ -3,6 +3,7 @@ import { X, CheckCircle2, Calendar, Clock, User, Phone, Mail, Award, Sparkles, D
 import confetti from 'canvas-confetti';
 import { shatranjStore } from '../../services/store';
 import { audioService } from '../../services/audioService';
+import { api } from '../../services/api';
 import { FreeTrialBooking } from '../../types';
 
 interface TrialModalProps {
@@ -36,9 +37,24 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
     setStep(2);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!studentName || !email || !phone) return;
+
+    try {
+      await api.trials.book({
+        parentName: studentName,
+        email,
+        phone,
+        childName: studentName,
+        childAge: parseInt(ageGrade.match(/\d+/)?.[0] || '10', 10),
+        experienceLevel: level === 'Competitive (1600+)' ? 'advanced' : level === 'Intermediate (1200-1600)' ? 'intermediate' : 'beginner',
+        preferredTimeSlot: `${date} at ${time}`,
+        notes: `${learningGoal} (Coach pref: ${coachPreference})`,
+      });
+    } catch (err) {
+      console.warn('Backend trial booking fallback to local store', err);
+    }
 
     const newBooking = shatranjStore.addTrialBooking({
       studentName,

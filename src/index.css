@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-bg-primary: #090b10;
+    --color-bg-secondary: #11141d;
+    --color-bg-card: #151924;
+    --color-bg-elevated: #1d2232;
+    --color-text-primary: #f8fafc;
+    --color-text-secondary: #a3adc2;
+    --color-text-muted: #64748b;
+    --color-accent-gold: #d4af37;
+    --color-accent-brass: #c5a059;
+    --color-accent-emerald: #10b981;
+    --color-board-light: #f0d9b5;
+    --color-board-dark: #b58863;
+    --border-classic: rgba(212, 175, 55, 0.14);
+  }
+
+  .light {
+    --color-bg-primary: #faf8f5;
+    --color-bg-secondary: #ffffff;
+    --color-bg-card: #ffffff;
+    --color-bg-elevated: #f4efe6;
+    --color-text-primary: #1c1917;
+    --color-text-secondary: #57534e;
+    --color-text-muted: #8d857b;
+    --color-accent-gold: #b48c26;
+    --color-accent-brass: #9b7420;
+    --color-accent-emerald: #059669;
+    --color-board-light: #f0d9b5;
+    --color-board-dark: #8b6238;
+    --border-classic: rgba(180, 140, 38, 0.18);
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Classical Typography Utility Classes */
+.font-serif-classic {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.04em;
+}
+
+.font-serif-garamond {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+/* Custom classic antique scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #090b10;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a3040;
+  border-radius: 4px;
+  border: 1px solid rgba(212, 175, 55, 0.1);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c5a059;
+}
+
+/* Classic Prestige Card styling with silky smooth elevation */
+.classic-card {
+  background: rgba(17, 20, 29, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.classic-card:hover {
+  border-color: rgba(212, 175, 55, 0.32);
+  transform: translateY(-3px);
+  box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.65), 0 0 20px -3px rgba(212, 175, 55, 0.12);
+}
+
+.light .classic-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(180, 140, 38, 0.16);
+}
+
+.light .classic-card:hover {
+  border-color: rgba(180, 140, 38, 0.35);
+  box-shadow: 0 16px 30px -8px rgba(180, 140, 38, 0.12);
+}
+
+/* Classic Button Gold Sheen */
+.btn-classic-gold {
+  background: linear-gradient(135deg, #e5c158 0%, #d4af37 50%, #b89128 100%);
+  color: #0a0c10;
+  font-weight: 700;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 20px -4px rgba(212, 175, 55, 0.35);
+}
+
+.btn-classic-gold:hover {
+  background: linear-gradient(135deg, #f0cf6a 0%, #e0bd45 50%, #c49d32 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -4px rgba(212, 175, 55, 0.5);
+}
+
+.btn-classic-gold:active {
+  transform: translateY(0);
+}
+
+/* Classical double border detail */
+.classic-border-double {
+  border: 3px double rgba(212, 175, 55, 0.25);
+}
+
+/* Delicate Gold Filament Accents & Lines */
+.gold-filament {
+  position: relative;
+}
+
+.gold-filament-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+}
+
+/* Ambient glow & smooth particles */
+@keyframes classicFloat {
+  0% { transform: translateY(0px) rotate(0deg); opacity: 0.25; }
+  50% { transform: translateY(-16px) rotate(120deg); opacity: 0.65; }
+  100% { transform: translateY(0px) rotate(240deg); opacity: 0.25; }
+}
+
+.animate-classic-float {
+  animation: classicFloat 9s ease-in-out infinite;
+}
+
+@keyframes warmPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.65; transform: scale(1.04); }
+}
+
+.animate-warm-pulse {
+  animation: warmPulse 5s ease-in-out infinite;
+}
+
+/* Smooth fade in for modals and tab switches */
+@keyframes smoothFadeIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-smooth-in {
+  animation: smoothFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Smooth Continuous Sliding Capabilities Marquee */
+@keyframes smoothSlideTrack {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-smooth-slide-track {
+  display: flex;
+  width: max-content;
+  animation: smoothSlideTrack 38s linear infinite;
+  will-change: transform;
+}
+
+.animate-smooth-slide-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-smooth-slide-track {
+    animation: none;
+    overflow-x: auto;
+  }
+}

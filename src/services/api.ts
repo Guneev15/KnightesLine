@@ -167,6 +167,32 @@ class ApiService {
         method: 'GET',
       });
     },
+
+    getGatewayStatus: async () => {
+      return await this.request<{
+        success: boolean;
+        isConfigured: boolean;
+        keyId: string;
+        mode: 'live' | 'test';
+        merchantName: string;
+        acceptedMethods: string[];
+      }>('/payments/gateway-status', {
+        method: 'GET',
+      });
+    },
+
+    configureGateway: async (params: { keyId: string; keySecret: string }) => {
+      return await this.request<{
+        success: boolean;
+        message: string;
+        isConfigured: boolean;
+        keyId: string;
+        mode: string;
+      }>('/payments/configure-gateway', {
+        method: 'POST',
+        body: JSON.stringify(params),
+      });
+    },
   };
 
   // --- Trial Booking Endpoints ---

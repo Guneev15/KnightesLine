@@ -39,6 +39,28 @@ export const authenticateJwt = (req: AuthRequest, res: Response, next: NextFunct
   }
 };
 
+export const optionalJwt = (req: AuthRequest, _res: Response, next: NextFunction): void => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return next();
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const decoded = jwt.verify(token, config.jwt.secret) as JwtPayload;
+    const user = db.findUserById(decoded.id);
+
+    if (user) {
+      req.user = user;
+    }
+  } catch {
+    // Continue even if token is invalid, treated as guest
+  }
+  next();
+};
+
 export const requireRole = (allowedRoles: string[]) => {
   return (req: AuthRequest, res: Response, next: NextFunction): void => {
     if (!req.user || !allowedRoles.includes(req.user.role)) {

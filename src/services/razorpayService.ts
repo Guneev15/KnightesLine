@@ -1,6 +1,7 @@
 import { api } from './api';
 import { shatranjStore } from './store';
 import { SubscriptionPlan, PaymentRecord } from '../types';
+import { getMerchantRazorpayKey } from '../config/paymentConfig';
 
 export const loadRazorpayScript = (): Promise<boolean> => {
   return new Promise((resolve) => {
@@ -57,8 +58,7 @@ export const openOfficialRazorpay = async ({
 
     const price = billingCycle === 'yearly' ? plan.yearlyPrice : plan.monthlyPrice;
 
-    let keyId =
-      (typeof window !== 'undefined' ? localStorage.getItem('shatranj_razorpay_key_id') : null) || '';
+    let keyId = getMerchantRazorpayKey();
     let orderId: string | undefined = undefined;
 
     // 1. Try to create Order via backend if available
@@ -70,7 +70,11 @@ export const openOfficialRazorpay = async ({
         billingCycle,
       });
 
-      if (orderData?.keyId && !orderData.keyId.includes('knightesline')) {
+      if (
+        orderData?.keyId &&
+        !orderData.keyId.includes('knightesline') &&
+        !orderData.keyId.includes('placeholder')
+      ) {
         keyId = orderData.keyId;
       }
       if (orderData?.isRealRazorpayOrder && orderData.orderId) {
@@ -81,9 +85,9 @@ export const openOfficialRazorpay = async ({
     }
 
     // Check if key is available
-    if (!keyId || keyId.includes('knightesline') || keyId.includes('setup_required')) {
+    if (!keyId || keyId.includes('placeholder') || keyId.includes('setup_required')) {
       throw new Error(
-        'Razorpay API Credentials required: Please click "Configure Razorpay API Keys" above to enter your Razorpay Key ID (rzp_test_... or rzp_live_...) from dashboard.razorpay.com.'
+        'The Academy payment gateway is currently being finalized. Please check back in a few minutes or contact support.'
       );
     }
 

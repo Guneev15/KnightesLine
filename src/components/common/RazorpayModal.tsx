@@ -1,23 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   X,
   ShieldCheck,
   CheckCircle2,
   AlertCircle,
-  ExternalLink,
-  KeyRound,
   Loader2,
-  ChevronDown,
-  ChevronUp,
   Sparkles,
-  Zap,
+  Lock,
+  ArrowRight,
+  Settings,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { shatranjStore } from '../../services/store';
 import { audioService } from '../../services/audioService';
 import { SubscriptionPlan, PaymentRecord } from '../../types';
 import { RazorpayLogo, UpiLogo, VisaLogo, MastercardLogo, RupayLogo } from './PaymentLogos';
-import { api } from '../../services/api';
 import { openOfficialRazorpay } from '../../services/razorpayService';
 
 interface RazorpayModalProps {
@@ -35,131 +32,15 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
   onClose,
   onPaymentSuccess,
 }) => {
-  const [gatewayStatus, setGatewayStatus] = useState<{
-    isConfigured: boolean;
-    keyId: string;
-    mode: 'live' | 'test';
-    merchantName: string;
-  } | null>(null);
-
-  const [isLoadingStatus, setIsLoadingStatus] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [completedPayment, setCompletedPayment] = useState<PaymentRecord | null>(null);
-
-  // Key Configuration form
-  const [showKeyConfig, setShowKeyConfig] = useState(false);
-  const [inputKeyId, setInputKeyId] = useState('');
-  const [inputKeySecret, setInputKeySecret] = useState('');
-  const [isSavingKeys, setIsSavingKeys] = useState(false);
-  const [keySuccessMessage, setKeySuccessMessage] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (isOpen) {
-      checkGatewayStatus();
-      setErrorMessage(null);
-      setCompletedPayment(null);
-    }
-  }, [isOpen]);
-
-  const checkGatewayStatus = async () => {
-    setIsLoadingStatus(true);
-    const storedKey =
-      typeof window !== 'undefined' ? localStorage.getItem('shatranj_razorpay_key_id') : null;
-
-    try {
-      const res = await api.payments.getGatewayStatus();
-      if (
-        res &&
-        res.keyId &&
-        !res.keyId.includes('knightesline') &&
-        !res.keyId.includes('setup_required')
-      ) {
-        setGatewayStatus({
-          isConfigured: res.isConfigured,
-          keyId: res.keyId,
-          mode: res.mode,
-          merchantName: res.merchantName,
-        });
-        setInputKeyId(res.keyId);
-        setIsLoadingStatus(false);
-        return;
-      }
-    } catch {
-      // Standalone Cloudflare Worker hosting mode
-    }
-
-    if (storedKey && (storedKey.startsWith('rzp_test_') || storedKey.startsWith('rzp_live_'))) {
-      setGatewayStatus({
-        isConfigured: true,
-        keyId: storedKey,
-        mode: storedKey.startsWith('rzp_live_') ? 'live' : 'test',
-        merchantName: 'Knightesline Academy Pvt. Ltd.',
-      });
-      setInputKeyId(storedKey);
-    } else {
-      setGatewayStatus({
-        isConfigured: false,
-        keyId: 'rzp_setup_required',
-        mode: 'test',
-        merchantName: 'Knightesline Academy Pvt. Ltd.',
-      });
-    }
-    setIsLoadingStatus(false);
-  };
 
   if (!isOpen || !plan) return null;
 
   const price = billingCycle === 'yearly' ? plan.yearlyPrice : plan.monthlyPrice;
   const currentUser = shatranjStore.getUser();
-
-  const handleSaveKeys = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inputKeyId.trim()) {
-      setErrorMessage('Please enter your Razorpay Key ID.');
-      return;
-    }
-
-    const cleanKeyId = inputKeyId.trim();
-    const cleanKeySecret = inputKeySecret.trim();
-
-    if (!cleanKeyId.startsWith('rzp_test_') && !cleanKeyId.startsWith('rzp_live_')) {
-      setErrorMessage('Razorpay Key ID must start with rzp_test_ or rzp_live_.');
-      return;
-    }
-
-    setIsSavingKeys(true);
-    setErrorMessage(null);
-    setKeySuccessMessage(null);
-
-    // Save to browser localStorage so it works on Cloudflare domain
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('shatranj_razorpay_key_id', cleanKeyId);
-      if (cleanKeySecret) {
-        localStorage.setItem('shatranj_razorpay_key_secret', cleanKeySecret);
-      }
-    }
-
-    // Also attempt saving to backend if available
-    try {
-      await api.payments.configureGateway({
-        keyId: cleanKeyId,
-        keySecret: cleanKeySecret || 'client_stored',
-      });
-    } catch {
-      // Runs in standalone client mode if backend is not hosted on same worker
-    }
-
-    setKeySuccessMessage('Razorpay API Key saved and activated successfully!');
-    setGatewayStatus({
-      isConfigured: true,
-      keyId: cleanKeyId,
-      mode: cleanKeyId.startsWith('rzp_live_') ? 'live' : 'test',
-      merchantName: 'Knightesline Academy Pvt. Ltd.',
-    });
-    setShowKeyConfig(false);
-    setIsSavingKeys(false);
-  };
+  const isAdmin = currentUser?.role === 'admin';
 
   const handleLaunchRazorpay = async () => {
     setIsProcessing(true);
@@ -197,13 +78,6 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
       onError: (err) => {
         setIsProcessing(false);
         setErrorMessage(err);
-        if (
-          err.includes('Credentials required') ||
-          err.includes('API Credentials') ||
-          err.includes('Authentication failed')
-        ) {
-          setShowKeyConfig(true);
-        }
       },
       onDismiss: () => {
         setIsProcessing(false);
@@ -221,7 +95,8 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
       <div className="relative w-full max-w-lg rounded-2xl bg-[#090d16] border border-slate-700/80 shadow-2xl overflow-hidden text-slate-200">
-        {/* Header */}
+        
+        {/* Verified Merchant Header */}
         <div className="px-6 py-4 bg-gradient-to-r from-[#07132b] via-[#091b3b] to-[#07132b] border-b border-blue-900/60 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-blue-600 text-white font-black flex items-center justify-center text-base shadow-lg shadow-blue-500/25">
@@ -229,7 +104,7 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
             </div>
             <div>
               <div className="text-sm font-bold text-white flex items-center gap-1.5">
-                <span>Official Razorpay Payment Gateway</span>
+                <span>Razorpay Secure Checkout</span>
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
               </div>
               <div className="text-[11px] text-blue-300 flex items-center gap-1">
@@ -276,145 +151,16 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
                 <div className="p-3.5 rounded-xl bg-red-950/60 border border-red-800 text-xs text-red-200 flex items-start gap-2.5">
                   <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
                   <div className="flex-1">
-                    <div className="font-bold">Payment Error</div>
+                    <div className="font-bold">Payment Notice</div>
                     <div className="text-[11px] mt-0.5 text-red-300">{errorMessage}</div>
                   </div>
                 </div>
               )}
 
-              {/* Success Alert for keys */}
-              {keySuccessMessage && (
-                <div className="p-3 rounded-xl bg-emerald-950/60 border border-emerald-800 text-xs text-emerald-200 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>{keySuccessMessage}</span>
-                </div>
-              )}
-
-              {/* Gateway Status Badge */}
-              <div className="p-3.5 rounded-xl border border-slate-800 bg-slate-900/40 space-y-2">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-slate-300 flex items-center gap-1.5">
-                    <Zap className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Gateway Status:</span>
-                  </span>
-
-                  {isLoadingStatus ? (
-                    <span className="flex items-center gap-1 text-[11px] text-slate-400">
-                      <Loader2 className="w-3 h-3 animate-spin" /> Checking...
-                    </span>
-                  ) : gatewayStatus?.isConfigured ? (
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      Razorpay Active ({gatewayStatus.mode === 'live' ? 'Live Production' : 'Test Mode'})
-                    </span>
-                  ) : (
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30 flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                      Razorpay Keys Needed
-                    </span>
-                  )}
-                </div>
-
-                <p className="text-[11px] text-slate-400 leading-relaxed">
-                  {gatewayStatus?.isConfigured
-                    ? 'Official Razorpay Checkout popup will open. Complete payment using UPI QR, Google Pay, PhonePe, Cards, or NetBanking.'
-                    : 'To process real UPI QR and Card payments, enter your Razorpay Key ID and Secret below or configure in .env.'}
-                </p>
-
-                {/* Toggle Key Configuration */}
-                <div className="pt-1">
-                  <button
-                    type="button"
-                    onClick={() => setShowKeyConfig(!showKeyConfig)}
-                    className="text-[11px] text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1 transition-colors"
-                  >
-                    <KeyRound className="w-3 h-3" />
-                    <span>{showKeyConfig ? 'Hide Gateway Settings' : 'Configure Razorpay API Keys'}</span>
-                    {showKeyConfig ? (
-                      <ChevronUp className="w-3 h-3" />
-                    ) : (
-                      <ChevronDown className="w-3 h-3" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              {/* Collapsible Key Configuration Form */}
-              {showKeyConfig && (
-                <form
-                  onSubmit={handleSaveKeys}
-                  className="p-4 rounded-xl border border-blue-900/50 bg-[#071329] space-y-3 text-xs"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-white flex items-center gap-1.5">
-                      <KeyRound className="w-3.5 h-3.5 text-blue-400" />
-                      Razorpay Credentials Setup
-                    </span>
-                    <a
-                      href="https://dashboard.razorpay.com/app/keys"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[10px] text-blue-400 hover:text-blue-300 underline flex items-center gap-0.5"
-                    >
-                      Get Free Keys <ExternalLink className="w-2.5 h-2.5" />
-                    </a>
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-semibold text-slate-300 mb-1">
-                      Razorpay Key ID
-                    </label>
-                    <input
-                      type="text"
-                      value={inputKeyId}
-                      onChange={(e) => setInputKeyId(e.target.value)}
-                      placeholder="rzp_test_... or rzp_live_..."
-                      className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-blue-400 font-mono"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-semibold text-slate-300 mb-1">
-                      Razorpay Key Secret
-                    </label>
-                    <input
-                      type="password"
-                      value={inputKeySecret}
-                      onChange={(e) => setInputKeySecret(e.target.value)}
-                      placeholder="Enter Razorpay Secret"
-                      className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-blue-400 font-mono"
-                    />
-                  </div>
-
-                  <div className="flex gap-2 pt-1">
-                    <button
-                      type="submit"
-                      disabled={isSavingKeys}
-                      className="flex-1 py-2 rounded-lg font-bold text-xs bg-blue-600 hover:bg-blue-500 text-white transition-colors disabled:opacity-50 flex items-center justify-center gap-1.5"
-                    >
-                      {isSavingKeys ? (
-                        <>
-                          <Loader2 className="w-3 h-3 animate-spin" /> Saving...
-                        </>
-                      ) : (
-                        'Save & Activate Gateway'
-                      )}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setShowKeyConfig(false)}
-                      className="px-3 py-2 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </form>
-              )}
-
               {/* Supported Payment Channels */}
               <div className="space-y-2">
                 <div className="text-[11px] font-semibold text-slate-400">
-                  Accepted Payment Methods via Official Gateway:
+                  Accepted Payment Methods (Zero Convenience Fee):
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div className="p-2.5 rounded-xl border border-slate-800/80 bg-slate-900/40 flex items-center gap-2.5">
@@ -453,7 +199,7 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
                     </div>
                     <div>
                       <div className="font-semibold text-white text-[11px]">Instant Activation</div>
-                      <div className="text-[10px] text-slate-400">Automated Webhook Sync</div>
+                      <div className="text-[10px] text-slate-400">Automated Account Upgrade</div>
                     </div>
                   </div>
                 </div>
@@ -470,12 +216,13 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
                   {isProcessing ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
-                      <span>Launching Razorpay Gateway...</span>
+                      <span>Opening Secure Razorpay Portal...</span>
                     </>
                   ) : (
                     <>
                       <Sparkles className="w-4 h-4" />
                       <span>Pay ₹{price.toLocaleString('en-IN')} with Razorpay</span>
+                      <ArrowRight className="w-4 h-4 ml-1" />
                     </>
                   )}
                 </button>
@@ -484,8 +231,8 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
               {/* Security & Verification Badges */}
               <div className="pt-1 flex flex-col items-center gap-2">
                 <div className="text-[11px] text-slate-400 flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  <span>256-Bit SSL Encrypted • PCI-DSS Level 1 Compliant</span>
+                  <Lock className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>256-Bit SSL Encrypted • RBI-Authorized Payment Gateway</span>
                 </div>
 
                 <div className="flex items-center gap-1.5 flex-wrap justify-center">
@@ -496,6 +243,20 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
                   <RupayLogo className="h-3" />
                 </div>
               </div>
+
+              {/* Discreet Admin Link */}
+              {isAdmin && (
+                <div className="pt-2 text-center border-t border-slate-800/60">
+                  <a
+                    href="#/admin"
+                    onClick={handleClose}
+                    className="text-[10px] text-slate-500 hover:text-amber-400 inline-flex items-center gap-1 transition-colors"
+                  >
+                    <Settings className="w-3 h-3" />
+                    <span>Admin Mode: Manage Merchant Keys in Admin Console</span>
+                  </a>
+                </div>
+              )}
             </div>
           ) : (
             /* Verified Payment Success Screen */

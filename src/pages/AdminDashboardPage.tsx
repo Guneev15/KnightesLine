@@ -13,13 +13,21 @@ import {
   Plus,
   Search,
   Sparkles,
-  Award
+  Award,
+  KeyRound,
+  ExternalLink,
 } from 'lucide-react';
 import { shatranjStore } from '../services/store';
 import { FreeTrialBooking, SubscriptionPlan, Coach, Course } from '../types';
+import { getMerchantRazorpayKey, setMerchantRazorpayKey } from '../config/paymentConfig';
 
 export const AdminDashboardPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'analytics' | 'bookings' | 'pricing' | 'courses' | 'coaches'>('analytics');
+  const [activeTab, setActiveTab] = useState<'analytics' | 'bookings' | 'pricing' | 'courses' | 'coaches' | 'gateway'>('analytics');
+  
+  // Gateway Admin State
+  const [gatewayKeyId, setGatewayKeyId] = useState<string>(getMerchantRazorpayKey());
+  const [gatewayKeySecret, setGatewayKeySecret] = useState<string>('');
+  const [gatewaySuccessMsg, setGatewaySuccessMsg] = useState<string | null>(null);
   
   // Data from persistent store
   const [bookings, setBookings] = useState<FreeTrialBooking[]>(shatranjStore.getTrialBookings());
@@ -79,6 +87,7 @@ export const AdminDashboardPage: React.FC = () => {
             { id: 'pricing', label: 'Pricing CMS' },
             { id: 'courses', label: 'Courses' },
             { id: 'coaches', label: 'Faculty' },
+            { id: 'gateway', label: 'Payment Gateway' },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -353,6 +362,132 @@ export const AdminDashboardPage: React.FC = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* TAB 6: Payment Gateway Configuration */}
+      {activeTab === 'gateway' && (
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                <KeyRound className="w-5 h-5 text-amber-500" />
+                <span>Merchant Payment Gateway Configuration</span>
+              </h2>
+              <p className="text-xs text-slate-400 mt-1">
+                Configure your official Razorpay Merchant API Keys. Payments made by students and parents across your website will route directly into your registered bank account.
+              </p>
+            </div>
+
+            <a
+              href="https://dashboard.razorpay.com/app/keys"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-blue-300 text-xs font-bold inline-flex items-center gap-1.5 transition-colors self-start sm:self-auto"
+            >
+              <span>Razorpay API Keys Dashboard</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          {/* Privacy & Architecture Guarantee Banner */}
+          <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-200 flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <div className="font-bold text-white text-sm">Automated Customer Experience Guarantee</div>
+              <p className="text-slate-300 leading-relaxed text-[11px]">
+                Students and parents are <span className="text-amber-400 font-semibold">NEVER</span> asked to enter any API keys or credentials. They only see the plan summary, price, and seamless UPI QR / Card checkout. Your merchant key is saved internally so payments are processed directly to your account.
+              </p>
+            </div>
+          </div>
+
+          {gatewaySuccessMsg && (
+            <div className="p-4 rounded-xl bg-emerald-950/60 border border-emerald-800 text-xs text-emerald-200 flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>{gatewaySuccessMsg}</span>
+            </div>
+          )}
+
+          {/* Configuration Form Card */}
+          <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-6">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                  Razorpay Key ID (Public Merchant Key)
+                </label>
+                <input
+                  type="text"
+                  value={gatewayKeyId}
+                  onChange={(e) => setGatewayKeyId(e.target.value)}
+                  placeholder="rzp_live_xxxxxxxxxxxxxx or rzp_test_xxxxxxxxxxxxxx"
+                  className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono text-sm placeholder-slate-600 focus:outline-none focus:border-amber-500 transition-colors"
+                />
+                <p className="text-[11px] text-slate-400 mt-1">
+                  Found in Razorpay Dashboard → Settings → API Keys. Format: <span className="font-mono text-slate-300">rzp_live_...</span> (for real money) or <span className="font-mono text-slate-300">rzp_test_...</span>
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                  Razorpay Key Secret (Server Only / Optional)
+                </label>
+                <input
+                  type="password"
+                  value={gatewayKeySecret}
+                  onChange={(e) => setGatewayKeySecret(e.target.value)}
+                  placeholder="••••••••••••••••••••••••"
+                  className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono text-sm placeholder-slate-600 focus:outline-none focus:border-amber-500 transition-colors"
+                />
+                <p className="text-[11px] text-slate-400 mt-1">
+                  Keep secret. Used only for server-side signature verification if running your own backend.
+                </p>
+              </div>
+            </div>
+
+            {/* Current Status Box */}
+            <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2">
+                <span className="text-slate-400">Current Gateway Mode:</span>
+                {gatewayKeyId.startsWith('rzp_live_') ? (
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold uppercase text-[10px]">
+                    ● Live Production Mode (Real Payments Active)
+                  </span>
+                ) : gatewayKeyId.startsWith('rzp_test_') ? (
+                  <span className="px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30 font-bold uppercase text-[10px]">
+                    ▲ Test Sandbox Mode
+                  </span>
+                ) : (
+                  <span className="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 font-bold uppercase text-[10px]">
+                    Not Configured
+                  </span>
+                )}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setMerchantRazorpayKey(gatewayKeyId);
+                  setGatewaySuccessMsg('Merchant Gateway Key ID successfully saved and activated for all platform checkouts!');
+                  setTimeout(() => setGatewaySuccessMsg(null), 4000);
+                }}
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-bold text-xs shadow-md shadow-amber-500/20 transition-all cursor-pointer"
+              >
+                Save Gateway Credentials
+              </button>
+            </div>
+
+            {/* Step by step guide */}
+            <div className="p-4 rounded-xl border border-slate-800 bg-slate-950/40 text-xs space-y-2">
+              <div className="font-bold text-slate-300">How to get your Live Razorpay Key:</div>
+              <ol className="list-decimal list-inside space-y-1 text-slate-400 text-[11px] leading-relaxed">
+                <li>Log in to your <a href="https://dashboard.razorpay.com" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:underline">Razorpay Dashboard</a>.</li>
+                <li>Make sure the toggle at the top left says <strong className="text-white">Live Mode</strong> (switch from Test to Live if you want real money).</li>
+                <li>Click <strong className="text-white">Settings</strong> on the left sidebar → <strong className="text-white">API Keys</strong> tab.</li>
+                <li>Click <strong className="text-white">Generate Key</strong> (or copy your existing Key ID starting with <code className="text-amber-400">rzp_live_...</code>).</li>
+                <li>Paste the Key ID into the field above and click <strong className="text-white">Save Gateway Credentials</strong>.</li>
+              </ol>
+            </div>
           </div>
         </div>
       )}

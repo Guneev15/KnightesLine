@@ -6,27 +6,19 @@
  * prompted to enter merchant credentials.
  */
 
-// Default Academy Merchant Key (Public Client-side Key ID)
-// Can be set via environment variable VITE_RAZORPAY_KEY_ID or edited here
-export const DEFAULT_RAZORPAY_KEY_ID =
-  (import.meta as any).env?.VITE_RAZORPAY_KEY_ID || 'rzp_live_default_key_placeholder';
+// Default Academy Merchant Key (Public Client-side Live Key ID)
+export const DEFAULT_RAZORPAY_KEY_ID = 'rzp_live_TiE3vAnrRHpSgT';
 
 export const getMerchantRazorpayKey = (): string => {
   if (typeof window !== 'undefined') {
-    // 1. Check if admin configured a custom key in admin settings
+    // 1. Check if admin configured an explicit live key in admin settings
     const adminKey = localStorage.getItem('shatranj_merchant_rzp_key');
-    if (adminKey && (adminKey.startsWith('rzp_test_') || adminKey.startsWith('rzp_live_'))) {
+    if (adminKey && adminKey.trim().startsWith('rzp_live_')) {
       return adminKey.trim();
-    }
-
-    // 2. Check if previously saved key exists
-    const legacyKey = localStorage.getItem('shatranj_razorpay_key_id');
-    if (legacyKey && (legacyKey.startsWith('rzp_test_') || legacyKey.startsWith('rzp_live_'))) {
-      return legacyKey.trim();
     }
   }
 
-  // 3. Fallback to default configured key
+  // 2. Return pre-configured Live Merchant Key
   return DEFAULT_RAZORPAY_KEY_ID;
 };
 

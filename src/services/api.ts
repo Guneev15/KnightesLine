@@ -42,10 +42,25 @@ class ApiService {
         headers,
       });
 
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || `API error: ${response.status}`);
+      const text = await response.text();
+      let data: any = {};
+
+      if (text && text.trim().length > 0) {
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = { message: text };
+        }
       }
+
+      if (!response.ok) {
+        const errorMsg =
+          data?.message ||
+          data?.error?.description ||
+          (text ? text.slice(0, 150) : `Server returned empty response (HTTP ${response.status})`);
+        throw new Error(errorMsg);
+      }
+
       return data;
     } catch (err: any) {
       console.warn(`API call failed for ${endpoint}:`, err?.message || err);

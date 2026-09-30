@@ -106,15 +106,20 @@ router.post('/configure-gateway', (req: Request, res: Response): void => {
 
   config.razorpay.keyId = cleanKeyId;
   config.razorpay.keySecret = cleanKeySecret;
-  persistKeysToEnv(cleanKeyId, cleanKeySecret);
   initRazorpayInstance();
 
+  // Send response back to frontend first
   res.json({
     success: true,
     message: 'Razorpay Gateway credentials saved and activated successfully!',
     isConfigured: true,
     keyId: cleanKeyId,
     mode: cleanKeyId.startsWith('rzp_live_') ? 'live' : 'test',
+  });
+
+  // Asynchronously persist to .env
+  setImmediate(() => {
+    persistKeysToEnv(cleanKeyId, cleanKeySecret);
   });
 });
 

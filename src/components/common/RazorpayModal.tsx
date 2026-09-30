@@ -161,7 +161,11 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
       onError: (err) => {
         setIsProcessing(false);
         setErrorMessage(err);
-        if (err.includes('Credentials required') || err.includes('API Credentials')) {
+        if (
+          err.includes('Credentials required') ||
+          err.includes('API Credentials') ||
+          err.includes('Authentication failed')
+        ) {
           setShowKeyConfig(true);
         }
       },

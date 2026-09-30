@@ -682,6 +682,7 @@ class ShatranjStore {
       localStorage.removeItem('shatranj_logged_in');
       localStorage.removeItem('shatranj_user');
       localStorage.removeItem('shatranj_role');
+      localStorage.removeItem('knightesline_token');
     }
     this.saveToStorage();
   }

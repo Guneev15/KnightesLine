@@ -64,28 +64,48 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
 
   const checkGatewayStatus = async () => {
     setIsLoadingStatus(true);
+    const storedKey =
+      typeof window !== 'undefined' ? localStorage.getItem('shatranj_razorpay_key_id') : null;
+
     try {
       const res = await api.payments.getGatewayStatus();
-      setGatewayStatus({
-        isConfigured: res.isConfigured,
-        keyId: res.keyId,
-        mode: res.mode,
-        merchantName: res.merchantName,
-      });
-      if (res.keyId && !res.keyId.includes('knightesline')) {
+      if (
+        res &&
+        res.keyId &&
+        !res.keyId.includes('knightesline') &&
+        !res.keyId.includes('setup_required')
+      ) {
+        setGatewayStatus({
+          isConfigured: res.isConfigured,
+          keyId: res.keyId,
+          mode: res.mode,
+          merchantName: res.merchantName,
+        });
         setInputKeyId(res.keyId);
+        setIsLoadingStatus(false);
+        return;
       }
     } catch {
-      // Default fallback
+      // Standalone Cloudflare Worker hosting mode
+    }
+
+    if (storedKey && (storedKey.startsWith('rzp_test_') || storedKey.startsWith('rzp_live_'))) {
+      setGatewayStatus({
+        isConfigured: true,
+        keyId: storedKey,
+        mode: storedKey.startsWith('rzp_live_') ? 'live' : 'test',
+        merchantName: 'Knightesline Academy Pvt. Ltd.',
+      });
+      setInputKeyId(storedKey);
+    } else {
       setGatewayStatus({
         isConfigured: false,
-        keyId: 'rzp_test_setup_required',
+        keyId: 'rzp_setup_required',
         mode: 'test',
         merchantName: 'Knightesline Academy Pvt. Ltd.',
       });
-    } finally {
-      setIsLoadingStatus(false);
     }
+    setIsLoadingStatus(false);
   };
 
   if (!isOpen || !plan) return null;
@@ -95,8 +115,16 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
 
   const handleSaveKeys = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputKeyId.trim() || !inputKeySecret.trim()) {
-      setErrorMessage('Please enter both Razorpay Key ID and Key Secret.');
+    if (!inputKeyId.trim()) {
+      setErrorMessage('Please enter your Razorpay Key ID.');
+      return;
+    }
+
+    const cleanKeyId = inputKeyId.trim();
+    const cleanKeySecret = inputKeySecret.trim();
+
+    if (!cleanKeyId.startsWith('rzp_test_') && !cleanKeyId.startsWith('rzp_live_')) {
+      setErrorMessage('Razorpay Key ID must start with rzp_test_ or rzp_live_.');
       return;
     }
 
@@ -104,25 +132,33 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
     setErrorMessage(null);
     setKeySuccessMessage(null);
 
-    try {
-      const res = await api.payments.configureGateway({
-        keyId: inputKeyId.trim(),
-        keySecret: inputKeySecret.trim(),
-      });
-
-      setKeySuccessMessage('Razorpay API Keys saved successfully! Gateway is active.');
-      setGatewayStatus({
-        isConfigured: res.isConfigured,
-        keyId: res.keyId,
-        mode: res.mode as any,
-        merchantName: 'Knightesline Academy Pvt. Ltd.',
-      });
-      setShowKeyConfig(false);
-    } catch (err: any) {
-      setErrorMessage(err?.message || 'Failed to save Razorpay API keys.');
-    } finally {
-      setIsSavingKeys(false);
+    // Save to browser localStorage so it works on Cloudflare domain
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('shatranj_razorpay_key_id', cleanKeyId);
+      if (cleanKeySecret) {
+        localStorage.setItem('shatranj_razorpay_key_secret', cleanKeySecret);
+      }
     }
+
+    // Also attempt saving to backend if available
+    try {
+      await api.payments.configureGateway({
+        keyId: cleanKeyId,
+        keySecret: cleanKeySecret || 'client_stored',
+      });
+    } catch {
+      // Runs in standalone client mode if backend is not hosted on same worker
+    }
+
+    setKeySuccessMessage('Razorpay API Key saved and activated successfully!');
+    setGatewayStatus({
+      isConfigured: true,
+      keyId: cleanKeyId,
+      mode: cleanKeyId.startsWith('rzp_live_') ? 'live' : 'test',
+      merchantName: 'Knightesline Academy Pvt. Ltd.',
+    });
+    setShowKeyConfig(false);
+    setIsSavingKeys(false);
   };
 
   const handleLaunchRazorpay = async () => {

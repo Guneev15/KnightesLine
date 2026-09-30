@@ -50,40 +50,15 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
     setErrorMsg('');
 
     try {
-      const res = await api.auth.login(email, password || 'password123');
+      const res = await api.auth.login(email, password);
       if (res.user) {
         shatranjStore.loginWithUser(res.user);
         audioService.playMove();
         navigateByRole(res.user.role as UserRole);
         return;
       }
-    } catch (err: any) {
-      // If user doesn't exist, auto-register student or report error
-      if (err?.message?.includes('Invalid email or password')) {
-        setErrorMsg('Invalid email or password. Use password: password123 for demo accounts, or enter a new email to register.');
-      } else {
-        try {
-          const namePart = email.split('@')[0];
-          const displayName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
-          const regRes = await api.auth.register({
-            name: displayName,
-            email,
-            password: password || 'password123',
-            role: 'student',
-          });
-          if (regRes.user) {
-            shatranjStore.loginWithUser(regRes.user);
-            audioService.playVictory();
-            navigateByRole('student');
-            return;
-          }
-        } catch {
-          // Client fallback
-          shatranjStore.setRole('student');
-          navigateByRole('student');
-          return;
-        }
-      }
+    } catch {
+      setErrorMsg('Invalid email or password');
     } finally {
       setIsLoading(false);
     }

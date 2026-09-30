@@ -104,13 +104,13 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
 
     const user = db.findUserByEmail(email);
     if (!user) {
-      res.status(401).json({ success: false, message: 'Invalid email or password.' });
+      res.status(401).json({ success: false, message: 'Invalid email or password' });
       return;
     }
 
     const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {
-      res.status(401).json({ success: false, message: 'Invalid email or password.' });
+      res.status(401).json({ success: false, message: 'Invalid email or password' });
       return;
     }
 

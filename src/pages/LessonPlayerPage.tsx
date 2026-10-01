@@ -16,34 +16,80 @@ export const LessonPlayerPage: React.FC<LessonPlayerPageProps> = ({
   courseId = 'crs_1',
   onNavigate,
 }) => {
-  const course: Course = shatranjStore.getCourseById(courseId) || shatranjStore.getCourses()[0];
-  const allLessons: Lesson[] = course.modules.flatMap(m => m.lessons);
+  const course: Course | undefined = shatranjStore.getCourseById(courseId) || shatranjStore.getCourses()[0];
+  const allLessons: Lesson[] = course?.modules?.flatMap(m => m.lessons || []) || [];
 
   const [activeLessonIndex, setActiveLessonIndex] = useState(0);
-  const currentLesson: Lesson = allLessons[activeLessonIndex] || allLessons[0];
+  const currentLesson: Lesson | undefined = allLessons[activeLessonIndex] || allLessons[0];
 
-  const [game, setGame] = useState(() => new Chess(currentLesson?.fen || 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'));
+  const [game, setGame] = useState(() => {
+    try {
+      return new Chess(currentLesson?.fen || 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+    } catch {
+      return new Chess();
+    }
+  });
   const [challengeSolved, setChallengeSolved] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
 
   useEffect(() => {
-    if (currentLesson) {
-      setGame(new Chess(currentLesson.fen));
+    if (currentLesson?.fen) {
+      try {
+        setGame(new Chess(currentLesson.fen));
+      } catch {
+        setGame(new Chess());
+      }
       setChallengeSolved(false);
       setFeedback(null);
     }
   }, [currentLesson]);
 
-  const handleMove = (_from: string, _to: string, san: string) => {
-    if (!currentLesson.interactiveChallenge) return;
+  if (!course || allLessons.length === 0 || !currentLesson) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-16 text-center space-y-6">
+        <div className="w-16 h-16 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+          <Sparkles className="w-8 h-8" />
+        </div>
+        <div className="space-y-2">
+          <h2 className="text-2xl font-black text-white">
+            {course?.title || 'Interactive Chess Masterclass'}
+          </h2>
+          <p className="text-sm text-slate-400 max-w-md mx-auto">
+            Interactive chessboard lessons for this module are currently expanding. Explore our other full-curriculum masterclasses!
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+          {course && (
+            <button
+              onClick={() => onNavigate('course-detail', course.slug)}
+              className="px-5 py-2.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 transition-colors"
+            >
+              ← Back to Course Syllabus
+            </button>
+          )}
+          <button
+            onClick={() => onNavigate('courses')}
+            className="px-5 py-2.5 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-md shadow-amber-500/20 transition-colors"
+          >
+            Browse All Masterclasses
+          </button>
+        </div>
+      </div>
+    );
+  }
 
-    const correctMoves = currentLesson.interactiveChallenge.correctMoves;
+  const handleMove = (_from: string, _to: string, san: string) => {
+    if (!currentLesson?.interactiveChallenge) return;
+
+    const correctMoves = currentLesson.interactiveChallenge.correctMoves || [];
     // Check if move matches correct SAN
     if (correctMoves.includes(san)) {
       setChallengeSolved(true);
-      setFeedback(`Brilliant move! ${currentLesson.interactiveChallenge.explanation}`);
+      setFeedback(`Brilliant move! ${currentLesson.interactiveChallenge.explanation || ''}`);
       audioService.playVictory();
-      shatranjStore.markLessonComplete(course.id, currentLesson.id);
+      if (course?.id && currentLesson?.id) {
+        shatranjStore.markLessonComplete(course.id, currentLesson.id);
+      }
 
       try {
         confetti({
@@ -59,7 +105,13 @@ export const LessonPlayerPage: React.FC<LessonPlayerPageProps> = ({
   };
 
   const resetBoard = () => {
-    setGame(new Chess(currentLesson.fen));
+    if (currentLesson?.fen) {
+      try {
+        setGame(new Chess(currentLesson.fen));
+      } catch {
+        setGame(new Chess());
+      }
+    }
     setChallengeSolved(false);
     setFeedback(null);
   };

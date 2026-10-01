@@ -298,6 +298,26 @@ export const INITIAL_COURSES: Course[] = [
             }
           }
         ]
+      },
+      {
+        id: 'm3_2',
+        title: 'Module 2: Knight Forks & Tactical Combinations',
+        lessons: [
+          {
+            id: 'l5_2',
+            courseId: 'crs_2',
+            title: '2.1 The Deadly Knight Fork',
+            durationMinutes: 20,
+            isCompleted: false,
+            fen: 'r1b1k2r/pppp1ppp/8/4n3/1bP2B2/2N2N2/PP2PPPP/R2QKB1R w KQkq - 0 1',
+            summary: 'L-shaped knight leaps are notoriously hard to spot. Master double attacks on King and Queen.',
+            interactiveChallenge: {
+              prompt: 'Capture the central knight to eliminate black counterplay and keep piece harmony!',
+              correctMoves: ['Bxe5', 'Nxe5'],
+              explanation: 'Capturing the active knight dismantles Black\'s center and preserves White piece coordination.'
+            }
+          }
+        ]
       }
     ]
   },
@@ -315,7 +335,76 @@ export const INITIAL_COURSES: Course[] = [
     rating: 4.94,
     totalDurationHours: 7.2,
     progressPercent: 0,
-    modules: []
+    modules: [
+      {
+        id: 'm4',
+        title: 'Module 1: King & Pawn Endgame Foundations',
+        lessons: [
+          {
+            id: 'l6',
+            courseId: 'crs_3',
+            title: '1.1 The Golden Rule of the Square',
+            durationMinutes: 16,
+            isCompleted: false,
+            fen: '8/8/4P3/8/8/8/1k6/4K3 w - - 0 1',
+            summary: 'Calculate whether the enemy king can catch your runaway passed pawn without counting moves on your fingers.',
+            interactiveChallenge: {
+              prompt: 'Push your passed pawn forward to queen safely!',
+              correctMoves: ['e7'],
+              explanation: 'e7! The pawn surges forward. The Black King is outside the square of the pawn and cannot stop promotion to Queen!'
+            }
+          },
+          {
+            id: 'l7',
+            courseId: 'crs_3',
+            title: '1.2 Seizing the Direct Opposition',
+            durationMinutes: 20,
+            isCompleted: false,
+            fen: '8/8/4k3/8/4K3/8/4P3/8 w - - 0 1',
+            summary: 'Place your king face-to-face with the opponent to force their king to step aside and escort your pawn to glory.',
+            interactiveChallenge: {
+              prompt: 'Play the king move that outflanks and breaks through for White!',
+              correctMoves: ['Kd4', 'Kf4'],
+              explanation: 'Outflanking! Taking opposition or advancing your King ahead of the pawn guarantees a path to promotion.'
+            }
+          }
+        ]
+      },
+      {
+        id: 'm5',
+        title: 'Module 2: Essential Rook Endgames',
+        lessons: [
+          {
+            id: 'l8',
+            courseId: 'crs_3',
+            title: '2.1 The Lucena Position: Building the Bridge',
+            durationMinutes: 25,
+            isCompleted: false,
+            fen: '1K1k4/1P6/8/8/8/8/2r5/1R6 w - - 0 1',
+            summary: 'The most important winning technique in rook endgames: building the bridge to shield your king from checks.',
+            interactiveChallenge: {
+              prompt: 'Initiate the bridge-building technique by placing your Rook on the 4th rank!',
+              correctMoves: ['Rb4'],
+              explanation: 'Rb4! The classic bridge technique! The rook will shield the white king on d4 from black rook checks, escorting the pawn to queen.'
+            }
+          },
+          {
+            id: 'l9',
+            courseId: 'crs_3',
+            title: '2.2 The Philidor Defense: Active Drawing Mechanism',
+            durationMinutes: 22,
+            isCompleted: false,
+            fen: '8/4k3/8/8/4KP2/8/r7/1R6 b - - 0 1',
+            summary: 'How to save a half point when down a pawn using 3rd rank cutting and infinite checks from behind.',
+            interactiveChallenge: {
+              prompt: 'Activate your Black Rook to start checking the White King from a safe distance!',
+              correctMoves: ['Ra4+', 'Ra6'],
+              explanation: 'Active defense! Checking from behind or cutting the 6th rank prevents the opponent from advancing their king.'
+            }
+          }
+        ]
+      }
+    ]
   },
   {
     id: 'crs_4',
@@ -331,7 +420,42 @@ export const INITIAL_COURSES: Course[] = [
     rating: 4.99,
     totalDurationHours: 10.5,
     progressPercent: 0,
-    modules: []
+    modules: [
+      {
+        id: 'm6',
+        title: 'Module 1: Modern Opening Architecture',
+        lessons: [
+          {
+            id: 'l10',
+            courseId: 'crs_4',
+            title: '1.1 Central Domination & Rapid Mobilization',
+            durationMinutes: 18,
+            isCompleted: false,
+            fen: 'r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3',
+            summary: 'Never move the same piece twice in the opening. Castle early and fight for d4/e4 squares.',
+            interactiveChallenge: {
+              prompt: 'Develop White’s light-squared bishop with pressure on Black’s center.',
+              correctMoves: ['Bb5', 'Bc4'],
+              explanation: 'Bb5 (Ruy Lopez) or Bc4 (Italian Game) develops with tempo, targeting key diagonals while preparing kingside castling!'
+            }
+          },
+          {
+            id: 'l11',
+            courseId: 'crs_4',
+            title: '1.2 Tournament Psychology & Dynamic Central Breaks',
+            durationMinutes: 24,
+            isCompleted: false,
+            fen: 'r1b2rk1/pp1nqppp/2p1pn2/3p4/2PP4/2NBPN2/PP3PPP/R1BQR1K1 w - - 0 1',
+            summary: 'Handling time trouble, calculating candidate moves methodically, and maintaining composure under pressure.',
+            interactiveChallenge: {
+              prompt: 'Break open the center with e4 to seize the initiative before Black finishes development!',
+              correctMoves: ['e4'],
+              explanation: '1. e4! A thematic central break. In tournament play, opening the center when better coordinated creates decisive tactical threats.'
+            }
+          }
+        ]
+      }
+    ]
   }
 ];
 
@@ -582,11 +706,11 @@ class ShatranjStore {
       const storedCoaches = localStorage.getItem('shatranj_coaches');
       if (storedCoaches) this.coaches = JSON.parse(storedCoaches);
 
-      // Sanitize courses from storage: reset legacy mock progress if present
+      // Sanitize courses from storage: reload updated curriculum with full lessons
       const storedCourses = localStorage.getItem('shatranj_courses');
-      const coursesCleanVersion = localStorage.getItem('shatranj_courses_clean_v3');
+      const coursesCleanVersion = localStorage.getItem('shatranj_courses_clean_v6');
       if (!coursesCleanVersion || !storedCourses) {
-        // Clear any legacy hardcoded mock progress from localStorage
+        // Load fresh comprehensive curriculum
         this.courses = INITIAL_COURSES.map(c => ({
           ...c,
           progressPercent: 0,
@@ -596,9 +720,21 @@ class ShatranjStore {
           }))
         }));
         localStorage.setItem('shatranj_courses', JSON.stringify(this.courses));
-        localStorage.setItem('shatranj_courses_clean_v3', 'true');
+        localStorage.setItem('shatranj_courses_clean_v6', 'true');
       } else {
-        this.courses = JSON.parse(storedCourses);
+        const parsed: Course[] = JSON.parse(storedCourses);
+        // Guarantee that every course has its complete modules & lessons
+        this.courses = parsed.map(c => {
+          const fresh = INITIAL_COURSES.find(ic => ic.id === c.id || ic.slug === c.slug);
+          if (fresh && (!c.modules || c.modules.length === 0 || c.modules.some(m => !m.lessons || m.lessons.length === 0))) {
+            return {
+              ...c,
+              modules: fresh.modules
+            };
+          }
+          return c;
+        });
+        localStorage.setItem('shatranj_courses', JSON.stringify(this.courses));
       }
 
       const storedPlans = localStorage.getItem('shatranj_plans');
@@ -744,8 +880,20 @@ class ShatranjStore {
   }
 
   public getCourseById(id: string): Course | undefined {
-    const course = this.courses.find(c => c.id === id || c.slug === id);
+    let course = this.courses.find(c => c.id === id || c.slug === id);
+    if (!course) {
+      course = INITIAL_COURSES.find(c => c.id === id || c.slug === id);
+    }
     if (!course) return undefined;
+
+    // Self-heal if modules or lessons are empty
+    if (!course.modules || course.modules.length === 0 || course.modules.some(m => !m.lessons || m.lessons.length === 0)) {
+      const fresh = INITIAL_COURSES.find(c => c.id === course?.id || c.slug === course?.slug);
+      if (fresh) {
+        course = { ...course, modules: fresh.modules };
+      }
+    }
+
     if (!this.isLoggedIn()) {
       return {
         ...course,

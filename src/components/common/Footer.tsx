@@ -149,13 +149,14 @@ export const Footer: React.FC<FooterProps> = ({ currentPath, onNavigate, onOpenT
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter parent or student email"
+                  placeholder="Enter your email"
                   required
-                  className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                  className="w-full pl-3.5 pr-11 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition-colors"
                 />
                 <button
                   type="submit"
-                  className="absolute right-1 top-1 bottom-1 px-2.5 rounded bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold flex items-center justify-center transition-colors"
+                  aria-label="Subscribe to Grandmaster Insights"
+                  className="absolute right-1 top-1 bottom-1 w-9 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold flex items-center justify-center transition-colors shadow-sm"
                 >
                   <Send className="w-3.5 h-3.5" />
                 </button>

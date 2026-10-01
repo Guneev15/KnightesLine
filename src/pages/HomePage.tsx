@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { ChessBoard } from '../components/chess/ChessBoard';
 import { shatranjStore } from '../services/store';
+import { audioService } from '../services/audioService';
 
 const PLATFORM_CAPABILITIES = [
   {
@@ -533,12 +534,25 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenTrialModal
           <p className="text-slate-300 text-sm max-w-lg mx-auto font-serif-garamond text-base">
             Reserve your complimentary private evaluation session today. No credit card required. Experience 45 minutes of structured chess insight, tactical analysis, and a personalized improvement roadmap.
           </p>
-          <div className="pt-2">
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
             <button
-              onClick={onOpenTrialModal}
-              className="btn-classic-gold px-10 py-4 rounded-xl font-bold text-xs uppercase tracking-wider shadow-2xl inline-flex items-center gap-2"
+              onClick={() => {
+                audioService.playMove();
+                onOpenTrialModal();
+              }}
+              className="btn-classic-gold px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-2xl inline-flex items-center gap-2 cursor-pointer transition-all"
             >
               <span>Book Your Free Trial Session ♞</span>
+            </button>
+            <button
+              onClick={() => {
+                audioService.playMove();
+                onNavigate('pricing');
+              }}
+              className="px-8 py-3.5 rounded-xl font-serif-classic font-bold text-xs text-amber-300 hover:text-white border border-amber-500/40 hover:border-amber-400 bg-slate-900/80 hover:bg-slate-800 transition-all inline-flex items-center gap-2 cursor-pointer shadow-lg"
+            >
+              <span>Explore Tuition & Plans</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
           <div className="text-[11px] text-amber-300/80 font-serif-classic tracking-wider">

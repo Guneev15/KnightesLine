@@ -27,33 +27,6 @@ export const Footer: React.FC<FooterProps> = ({ currentPath, onNavigate, onOpenT
 
   return (
     <footer className="border-t border-slate-800 bg-[#07090e] text-slate-400 text-sm">
-      {/* Pre-footer Callout Banner - Transformed to Explore Tuition & Curriculum */}
-      <div className="border-b border-slate-800/80 bg-gradient-to-r from-amber-500/10 via-purple-500/5 to-slate-900/40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-1 text-center md:text-left">
-            <h3 className="text-xl sm:text-2xl font-serif-classic font-bold text-white flex items-center justify-center md:justify-start gap-2">
-              <span>Ascend to Mastery with Knightesline.</span>
-              <span className="text-[#d4af37]">♞</span>
-            </h3>
-            <p className="text-slate-300 text-sm font-serif-garamond text-base">
-              {isPricing
-                ? 'Master openings, endgame techniques, and deep tactical vision with our titled Grandmaster faculty.'
-                : 'From novice to FIDE tournament competitor. Structured Grandmaster curriculum starting at ₹799/month.'}
-            </p>
-          </div>
-          <button
-            onClick={() => {
-              audioService.playMove();
-              onNavigate(isPricing ? 'courses' : 'pricing');
-            }}
-            className="px-6 py-3 rounded-xl font-serif-classic font-bold btn-classic-gold text-slate-950 text-sm flex items-center gap-2 shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all cursor-pointer"
-          >
-            <span>{isPricing ? 'Browse Full Curriculum' : 'Explore Tuition & Plans'}</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           

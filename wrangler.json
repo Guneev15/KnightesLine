@@ -3,7 +3,6 @@
   "name": "knightesliner",
   "compatibility_date": "2026-09-30",
   "assets": {
-    "directory": "./dist",
-    "binding": "ASSETS"
+    "directory": "./dist"
   }
 }

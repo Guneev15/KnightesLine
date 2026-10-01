@@ -122,6 +122,7 @@ export function App() {
 
       {/* Comprehensive Academic Footer */}
       <Footer
+        currentPath={currentPath}
         onNavigate={handleNavigate}
         onOpenTrialModal={() => setTrialModalOpen(true)}
       />

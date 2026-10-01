@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import { Crown, Heart, Shield, CheckCircle2, Send, Lock } from 'lucide-react';
+import { Crown, Heart, Shield, CheckCircle2, Send, Lock, ArrowRight, Sparkles } from 'lucide-react';
 import { audioService } from '../../services/audioService';
 import { PaymentSecurityBadges } from './PaymentLogos';
 
 interface FooterProps {
+  currentPath?: string;
   onNavigate: (path: string) => void;
   onOpenTrialModal: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenTrialModal }) => {
+export const Footer: React.FC<FooterProps> = ({ currentPath, onNavigate, onOpenTrialModal }) => {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+
+  const isPricing = currentPath === 'pricing';
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,7 +27,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenTrialModal }) 
 
   return (
     <footer className="border-t border-slate-800 bg-[#07090e] text-slate-400 text-sm">
-      {/* Pre-footer Callout Banner */}
+      {/* Pre-footer Callout Banner - Transformed to Explore Tuition & Curriculum */}
       <div className="border-b border-slate-800/80 bg-gradient-to-r from-amber-500/10 via-purple-500/5 to-slate-900/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center md:text-left">
@@ -33,15 +36,20 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenTrialModal }) 
               <span className="text-[#d4af37]">♞</span>
             </h3>
             <p className="text-slate-300 text-sm font-serif-garamond text-base">
-              Classical discipline. Grandmaster mentorship. Your inaugural evaluation class is complimentary.
+              {isPricing
+                ? 'Master openings, endgame techniques, and deep tactical vision with our titled Grandmaster faculty.'
+                : 'From novice to FIDE tournament competitor. Structured Grandmaster curriculum starting at ₹799/month.'}
             </p>
           </div>
           <button
-            onClick={onOpenTrialModal}
-            className="px-6 py-3 rounded-xl font-serif-classic font-bold btn-classic-gold text-slate-950 text-sm flex items-center gap-2"
+            onClick={() => {
+              audioService.playMove();
+              onNavigate(isPricing ? 'courses' : 'pricing');
+            }}
+            className="px-6 py-3 rounded-xl font-serif-classic font-bold btn-classic-gold text-slate-950 text-sm flex items-center gap-2 shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all cursor-pointer"
           >
-            <span>Book Your Free Trial</span>
-            <span>→</span>
+            <span>{isPricing ? 'Browse Full Curriculum' : 'Explore Tuition & Plans'}</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>

@@ -1,0 +1,34 @@
+# robots.txt for Knightesline Online Chess Academy
+# https://knightesliner.tguneev.workers.dev
+
+User-agent: *
+Allow: /
+Allow: /#/*
+Allow: /sitemap.xml
+Allow: /favicon.svg
+Allow: /icons.svg
+Allow: /og-image.png
+
+# Disallow authenticated private dashboard views
+Disallow: /#/*dashboard*
+Disallow: /#/*classroom*
+Disallow: /#/*settings*
+Disallow: /#/*profile*
+Disallow: /#/*notifications*
+Disallow: /api/
+
+# Specialized search bot configurations
+User-agent: Googlebot
+Allow: /
+Allow: /#/*
+
+User-agent: Bingbot
+Allow: /
+Allow: /#/*
+
+User-agent: Applebot
+Allow: /
+Allow: /#/*
+
+# Sitemap declaration
+Sitemap: https://knightesliner.tguneev.workers.dev/sitemap.xml

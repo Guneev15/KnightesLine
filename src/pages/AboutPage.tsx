@@ -21,6 +21,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenTrialMod
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-100 font-serif-garamond italic">
             Mastering it should inspire noble intuition."
           </span>
+          <span className="sr-only"> — About Knightesline Online Chess Academy</span>
         </h1>
         <p className="text-base text-slate-300 max-w-2xl mx-auto leading-relaxed font-serif-garamond text-lg">
           We founded Knightesline because we were frustrated watching enthusiastic young minds get bored by dry 400-page notation textbooks and impersonal mass coaching centers.

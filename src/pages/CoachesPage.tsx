@@ -30,7 +30,7 @@ export const CoachesPage: React.FC<CoachesPageProps> = ({ onNavigate, onOpenTria
           Elite Faculty
         </div>
         <h1 className="text-3xl sm:text-5xl font-black text-white">
-          Meet Our Titled Chess Mentors
+          Grandmaster &amp; Titled Chess Coaches
         </h1>
         <p className="text-sm text-slate-400 max-w-2xl">
           Learn from Grandmasters, International Masters, and Certified Youth Specialists with proven records in developing state and national champions.

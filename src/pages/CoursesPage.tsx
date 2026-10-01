@@ -30,7 +30,7 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({ onNavigate }) => {
           Knightesline Master Curriculum
         </div>
         <h1 className="text-3xl sm:text-5xl font-bold text-slate-100 font-serif-classic">
-          Classical Chess Syllabus
+          Online Chess Courses &amp; FIDE Master Curriculum
         </h1>
         <p className="text-sm text-slate-400 max-w-2xl font-serif-garamond text-base">
           From first pawn moves to master-level tournament opening systems. Every course includes interactive board exercises, tactical quizzes, and Grandmaster commentary.

@@ -1,0 +1,24 @@
+{
+  "name": "Knightesline Chess Academy",
+  "short_name": "Knightesline",
+  "description": "Premier Online Chess Academy with certified Grandmasters, interactive classroom, and progress analytics.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090b10",
+  "theme_color": "#090b10",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "education",
+    "games",
+    "sports"
+  ],
+  "lang": "en"
+}

@@ -75,7 +75,7 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
           <span>Zero Tuition • Complimentary Master Evaluation Class</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-bold text-white font-serif-classic">
-          Reserve Your Free Evaluation Class ♞
+          Book a Free 1-on-1 Chess Evaluation Class ♞
         </h1>
         <p className="text-sm text-slate-300 max-w-xl mx-auto font-serif-garamond text-base">
           Experience our virtual interactive classroom with a titled master. We'll diagnose your chess level and give you a personal roadmap.

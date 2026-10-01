@@ -32,14 +32,47 @@ import { SettingsPage } from './pages/SettingsPage';
 import { NotificationsPage } from './pages/NotificationsPage';
 import { CommunityPage } from './pages/CommunityPage';
 
+import { updatePageSeo } from './services/seo';
+
+// Helper to parse URL hash into path and param
+function parseHash(): { path: string; param?: string } {
+  if (typeof window === 'undefined') return { path: 'home', param: undefined };
+  const raw = window.location.hash.replace(/^#\/?/, '');
+  if (!raw) return { path: 'home', param: undefined };
+  const [pathPart, queryPart] = raw.split('?');
+  return { path: pathPart || 'home', param: queryPart || undefined };
+}
+
 export function App() {
-  const [currentPath, setCurrentPath] = useState<string>('home');
-  const [routeParam, setRouteParam] = useState<string | undefined>(undefined);
+  const [currentPath, setCurrentPath] = useState<string>(() => parseHash().path);
+  const [routeParam, setRouteParam] = useState<string | undefined>(() => parseHash().param);
   const [trialModalOpen, setTrialModalOpen] = useState<boolean>(false);
+
+  // Sync with browser back/forward buttons and hash changes
+  useEffect(() => {
+    const handleHashChange = () => {
+      const { path, param } = parseHash();
+      setCurrentPath(path);
+      setRouteParam(param);
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  // Update document title, meta descriptions, and OpenGraph dynamically
+  useEffect(() => {
+    updatePageSeo(currentPath, routeParam);
+  }, [currentPath, routeParam]);
 
   const handleNavigate = (path: string, param?: string) => {
     setCurrentPath(path);
     setRouteParam(param);
+    const newHash = param ? `#/${path}?${param}` : (path === 'home' ? '#/' : `#/${path}`);
+    if (window.location.hash !== newHash) {
+      window.history.pushState(null, '', newHash);
+    }
+    updatePageSeo(path, param);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

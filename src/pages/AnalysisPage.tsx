@@ -23,12 +23,46 @@ export const AnalysisPage: React.FC = () => {
   const [activeBoardFen, setActiveBoardFen] = useState<string>(selectedMoment.fen);
   const [customPgnInput, setCustomPgnInput] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [orientation, setOrientation] = useState<'white' | 'black'>('white');
+  const [copiedToast, setCopiedToast] = useState<string | null>(null);
 
   const displayGame = new Chess(activeBoardFen);
 
   const handleSelectMoment = (m: CriticalMoment) => {
     setSelectedMoment(m);
     setActiveBoardFen(m.fen);
+  };
+
+  // Keyboard navigation: ArrowLeft/Right to cycle moves, 'F' to flip
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) return;
+
+      if (e.key === 'ArrowLeft') {
+        const curIdx = analysis.criticalMoments.findIndex(m => m === selectedMoment);
+        if (curIdx > 0) {
+          handleSelectMoment(analysis.criticalMoments[curIdx - 1]);
+        }
+      } else if (e.key === 'ArrowRight') {
+        const curIdx = analysis.criticalMoments.findIndex(m => m === selectedMoment);
+        if (curIdx < analysis.criticalMoments.length - 1) {
+          handleSelectMoment(analysis.criticalMoments[curIdx + 1]);
+        }
+      } else if (e.key === 'f' || e.key === 'F') {
+        setOrientation(prev => prev === 'white' ? 'black' : 'white');
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedMoment, analysis.criticalMoments]);
+
+  const copyToClipboard = (text: string, label: string) => {
+    try {
+      navigator.clipboard?.writeText(text);
+      setCopiedToast(label);
+      setTimeout(() => setCopiedToast(null), 2500);
+    } catch {}
   };
 
   const handlePasteAnalyze = (e: React.FormEvent) => {
@@ -160,8 +194,51 @@ export const AnalysisPage: React.FC = () => {
               <ChessBoard
                 game={displayGame}
                 boardTheme="emerald"
+                orientation={orientation}
                 interactive={false}
               />
+            </div>
+
+            {/* Board Utility Toolbar & Keyboard Hints */}
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800 text-xs">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setOrientation(prev => prev === 'white' ? 'black' : 'white')}
+                  className="px-2.5 py-1 rounded-lg border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors flex items-center gap-1.5 text-[11px]"
+                  title="Press 'F' to flip"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  <span>Flip ({orientation === 'white' ? 'White' : 'Black'})</span>
+                </button>
+
+                <button
+                  onClick={() => copyToClipboard(activeBoardFen, 'FEN')}
+                  className="px-2.5 py-1 rounded-lg border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors text-[11px]"
+                >
+                  Copy FEN
+                </button>
+
+                <button
+                  onClick={() => copyToClipboard(analysis.pgn, 'PGN')}
+                  className="px-2.5 py-1 rounded-lg border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors text-[11px]"
+                >
+                  Copy PGN
+                </button>
+              </div>
+
+              {copiedToast ? (
+                <span className="text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30 flex items-center gap-1 animate-in fade-in">
+                  <CheckCircle2 className="w-3 h-3" />
+                  <span>{copiedToast} Copied!</span>
+                </span>
+              ) : (
+                <div className="text-[10px] text-slate-500 hidden sm:flex items-center gap-1.5 font-mono">
+                  <span className="px-1 py-0.5 rounded bg-slate-800 border border-slate-700">← / →</span>
+                  <span>Step Moves</span>
+                  <span className="px-1 py-0.5 rounded bg-slate-800 border border-slate-700">F</span>
+                  <span>Flip</span>
+                </div>
+              )}
             </div>
 
             <div className="mt-3 p-3 rounded-xl bg-slate-950 border border-slate-800/80 text-xs space-y-1">

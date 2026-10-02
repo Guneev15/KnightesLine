@@ -106,6 +106,11 @@ const ROUTE_SEO: Record<string, PageSeoConfig> = {
     title: 'Join Knightesline Chess Academy | Student Enrollment',
     description: 'Create an account to begin your grandmaster chess training journey, track your ratings, and join academy tournaments.',
     canonicalPath: '/#/signup'
+  },
+  '404': {
+    title: 'Page Not Found (Error 404) | Knightesline Online Chess Academy',
+    description: 'The requested chess page or masterclass does not exist on our board.',
+    canonicalPath: '/#/404'
   }
 };
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Star, Award, Shield, CheckCircle2, Clock, Calendar, Users, Video, MessageSquare } from 'lucide-react';
+import { ArrowLeft, Star, Award, Shield, CheckCircle2, Clock, Calendar, Users, Video, MessageSquare, Share2 } from 'lucide-react';
 import { shatranjStore } from '../services/store';
 import { Coach } from '../types';
 
@@ -16,6 +16,22 @@ export const CoachDetailPage: React.FC<CoachDetailPageProps> = ({
 }) => {
   const coach: Coach = shatranjStore.getCoachById(coachId) || shatranjStore.getCoaches()[0];
   const [selectedSlot, setSelectedSlot] = useState(coach.availableSlots[0]);
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      navigator.share({
+        title: `${coach.name} (${coach.title}) — Knightesline Coach`,
+        text: `Train 1-on-1 with ${coach.title} ${coach.name} at Knightesline Chess Academy!`,
+        url,
+      }).catch(() => {});
+    } else {
+      navigator.clipboard?.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
@@ -186,6 +202,14 @@ export const CoachDetailPage: React.FC<CoachDetailPageProps> = ({
             >
               <Video className="w-3.5 h-3.5 text-blue-400" />
               <span>Preview Online Classroom</span>
+            </button>
+
+            <button
+              onClick={handleShare}
+              className="w-full py-2 rounded-xl font-semibold text-xs border border-slate-700/60 bg-slate-900/60 hover:bg-slate-800 text-slate-300 hover:text-white transition-colors flex items-center justify-center gap-1.5"
+            >
+              <Share2 className="w-3.5 h-3.5 text-amber-400" />
+              <span>{copied ? 'Profile Link Copied! ✓' : 'Share Coach Profile'}</span>
             </button>
           </div>
 

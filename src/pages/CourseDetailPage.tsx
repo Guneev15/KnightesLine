@@ -1,5 +1,5 @@
-import React from 'react';
-import { ArrowLeft, Star, Clock, BookOpen, CheckCircle2, Play, Users, Award, Shield } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowLeft, Star, Clock, BookOpen, CheckCircle2, Play, Users, Award, Shield, Share2 } from 'lucide-react';
 import { shatranjStore } from '../services/store';
 
 interface CourseDetailPageProps {
@@ -15,9 +15,25 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
 }) => {
   const course = shatranjStore.getCourseById(courseSlug) || shatranjStore.getCourses()[0];
   const isLoggedIn = shatranjStore.isLoggedIn();
+  const [copied, setCopied] = useState(false);
 
   const allLessons = course.modules.flatMap(m => m.lessons);
   const completedCount = allLessons.filter(l => l.isCompleted).length;
+
+  const handleShare = () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      navigator.share({
+        title: course.title,
+        text: `Check out ${course.title} by ${course.instructorName} at Knightesline Chess Academy!`,
+        url,
+      }).catch(() => {});
+    } else {
+      navigator.clipboard?.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
@@ -125,6 +141,14 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
               className="w-full py-2.5 rounded-xl font-semibold text-xs border border-slate-700 bg-slate-800/60 hover:bg-slate-800 text-slate-200 transition-colors"
             >
               Book 1-on-1 Session with Coach ♟
+            </button>
+
+            <button
+              onClick={handleShare}
+              className="w-full py-2 rounded-xl font-semibold text-xs border border-slate-700/60 bg-slate-900/60 hover:bg-slate-800 text-slate-300 hover:text-white transition-colors flex items-center justify-center gap-1.5"
+            >
+              <Share2 className="w-3.5 h-3.5 text-amber-400" />
+              <span>{copied ? 'Link Copied to Clipboard! ✓' : 'Share Course'}</span>
             </button>
           </div>
 

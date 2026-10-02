@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { TrialModal } from './components/common/TrialModal';
+import { AdvisorWidget } from './components/common/AdvisorWidget';
 
 // All 27 Application Views
 import { HomePage } from './pages/HomePage';
@@ -31,6 +32,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import { SettingsPage } from './pages/SettingsPage';
 import { NotificationsPage } from './pages/NotificationsPage';
 import { CommunityPage } from './pages/CommunityPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 import { updatePageSeo } from './services/seo';
 
@@ -133,8 +135,13 @@ export function App() {
         return <NotificationsPage onNavigate={handleNavigate} />;
       case 'community':
         return <CommunityPage />;
+      case '404':
+        return <NotFoundPage onNavigate={handleNavigate} />;
       default:
-        return <HomePage onNavigate={handleNavigate} onOpenTrialModal={() => setTrialModalOpen(true)} />;
+        if (!currentPath || currentPath === '' || currentPath === 'home' || currentPath === '/') {
+          return <HomePage onNavigate={handleNavigate} onOpenTrialModal={() => setTrialModalOpen(true)} />;
+        }
+        return <NotFoundPage onNavigate={handleNavigate} />;
     }
   };
 
@@ -166,6 +173,9 @@ export function App() {
         onClose={() => setTrialModalOpen(false)}
         onBookingSuccess={() => {}}
       />
+
+      {/* Floating Academic Advisor & WhatsApp Quick-Connect */}
+      <AdvisorWidget onOpenTrialModal={() => setTrialModalOpen(true)} />
     </div>
   );
 }

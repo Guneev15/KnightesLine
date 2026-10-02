@@ -362,9 +362,9 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span>Confirmation email sent to <strong className="text-white">{confirmedBooking.email}</strong></span>
                 </div>
-                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-300">
-                  <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>WhatsApp alert prepared for <strong className="text-white">{confirmedBooking.phone}</strong></span>
+                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300">
+                  <Clock className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span>Meeting link will be dispatched to <strong className="text-white">{confirmedBooking.phone}</strong></span>
                 </div>
               </div>
 
@@ -383,7 +383,7 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
                   <span className="font-semibold text-slate-200">{confirmedBooking.coachPreference}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">WhatsApp Contact:</span>
+                  <span className="text-slate-400">Student Phone:</span>
                   <span className="font-semibold text-slate-200">{confirmedBooking.phone}</span>
                 </div>
               </div>

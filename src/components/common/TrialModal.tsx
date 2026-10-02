@@ -402,21 +402,11 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
                     link.click();
                     document.body.removeChild(link);
                   }}
-                  className="w-full py-3 rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20"
+                  className="w-full py-3 rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 cursor-pointer"
                 >
                   <Download className="w-4 h-4 text-slate-950" />
                   <span>Add Class to Calendar (.ics)</span>
                 </button>
-
-                <a
-                  href={notificationService.getWhatsAppTrialLink(confirmedBooking)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-full py-2.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-semibold transition-all flex items-center justify-center gap-2"
-                >
-                  <MessageSquare className="w-4 h-4" />
-                  <span>Optional: Chat with Coach on WhatsApp ({ACADEMY_CONFIG.OWNER_PHONE_FORMATTED})</span>
-                </a>
               </div>
 
               <p className="text-[11px] text-slate-400">

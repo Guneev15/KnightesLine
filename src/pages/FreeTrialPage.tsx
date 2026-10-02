@@ -297,16 +297,6 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
             >
               Return to Academy Home ♞
             </button>
-
-            <a
-              href={notificationService.getWhatsAppTrialLink(confirmedBooking)}
-              target="_blank"
-              rel="noreferrer"
-              className="w-full py-2.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 font-semibold text-xs flex items-center justify-center gap-2 transition-all"
-            >
-              <MessageSquare className="w-4 h-4" />
-              <span>Optional: Chat with Coach on WhatsApp ({ACADEMY_CONFIG.OWNER_PHONE_FORMATTED})</span>
-            </a>
           </div>
 
           <p className="text-[11px] text-slate-400">

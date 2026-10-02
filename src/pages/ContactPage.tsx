@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MessageSquare, Send, CheckCircle2, Clock, ShieldCheck } from 'lucide-react';
 import { audioService } from '../services/audioService';
+import { notificationService, ACADEMY_CONFIG } from '../services/notificationService';
 
 export const ContactPage: React.FC = () => {
   const [name, setName] = useState('');
@@ -12,6 +13,15 @@ export const ContactPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !message) return;
+    
+    // Dispatch real-time email alert to krish50023@gmail.com
+    notificationService.sendContactFormNotification({
+      name,
+      email,
+      category,
+      message,
+    });
+
     setTicketSent(true);
     audioService.playVictory();
   };
@@ -36,14 +46,14 @@ export const ContactPage: React.FC = () => {
           
           {/* WhatsApp Direct */}
           <a
-            href="https://wa.me/?text=Hi%20Knightesline%20Academy!%20I%20have%20a%20question%20about%20chess%20coaching."
+            href={`https://wa.me/${ACADEMY_CONFIG.OWNER_PHONE}?text=${encodeURIComponent("Hi Knightesline Academy! I have a question about chess coaching.")}`}
             target="_blank"
             rel="noreferrer"
             className="p-5 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/15 transition-all block space-y-2 group classic-card"
           >
             <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
               <MessageSquare className="w-4 h-4" />
-              <span>Instant WhatsApp Concierge</span>
+              <span>Instant WhatsApp Concierge ({ACADEMY_CONFIG.OWNER_PHONE_FORMATTED})</span>
             </div>
             <p className="text-xs text-slate-300">
               Chat directly with our academic counselor on WhatsApp. Average reply in 5 minutes.
@@ -60,7 +70,7 @@ export const ContactPage: React.FC = () => {
               <span>Academic Inquiries</span>
             </div>
             <p className="text-slate-300 font-mono text-[11px]">
-              support@knightesline.com • admissions@knightesline.com
+              {ACADEMY_CONFIG.OWNER_EMAIL} • support@knightesline.com
             </p>
             <div className="text-[11px] text-slate-500 flex items-center gap-1 pt-1">
               <Clock className="w-3 h-3" />

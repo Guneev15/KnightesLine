@@ -4,6 +4,7 @@ import confetti from 'canvas-confetti';
 import { shatranjStore } from '../../services/store';
 import { audioService } from '../../services/audioService';
 import { api } from '../../services/api';
+import { notificationService, ACADEMY_CONFIG } from '../../services/notificationService';
 import { FreeTrialBooking } from '../../types';
 
 interface TrialModalProps {
@@ -55,6 +56,19 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
     } catch (err) {
       console.warn('Backend trial booking fallback to local store', err);
     }
+
+    // Dispatch real-time email alert to krish50023@gmail.com
+    notificationService.sendTrialBookingNotification({
+      studentName,
+      email,
+      phone,
+      ageGrade,
+      playerLevel: level,
+      preferredDate: date,
+      preferredTime: time,
+      learningGoal,
+      coachPreference,
+    });
 
     const newBooking = shatranjStore.addTrialBooking({
       studentName,
@@ -364,13 +378,13 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
               {/* Action buttons */}
               <div className="flex flex-col sm:flex-row gap-2 pt-2 justify-center">
                 <a
-                  href={`https://wa.me/?text=Hi!%20I%20just%20booked%20my%20free%20chess%20trial%20class%20on%20Knightesline%20Academy%20for%20${encodeURIComponent(confirmedBooking.preferredDate)}!`}
+                  href={notificationService.getWhatsAppTrialLink(confirmedBooking)}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-4 py-2.5 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 text-xs font-bold hover:bg-emerald-500/20 transition-colors flex items-center justify-center gap-1.5"
+                  className="px-4 py-2.5 rounded-xl border border-emerald-500/40 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md shadow-emerald-600/20"
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
-                  <span>WhatsApp Reminder Preview</span>
+                  <span>Connect with Coach on WhatsApp ({ACADEMY_CONFIG.OWNER_PHONE_FORMATTED})</span>
                 </a>
 
                 <button
@@ -388,9 +402,13 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
                   className="px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition-colors flex items-center justify-center gap-1.5"
                 >
                   <Download className="w-3.5 h-3.5 text-[#d4af37]" />
-                  <span>Add to Google / iCal</span>
+                  <span>Add to Calendar</span>
                 </button>
               </div>
+
+              <p className="text-[11px] text-slate-400">
+                A reservation copy has been emailed directly to our admissions team (<span className="text-amber-300 font-mono">{ACADEMY_CONFIG.OWNER_EMAIL}</span>).
+              </p>
 
               <div className="pt-2">
                 <button

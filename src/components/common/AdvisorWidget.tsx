@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { MessageCircle, X, Sparkles, CheckCircle2, ChevronUp } from 'lucide-react';
 
+import { ACADEMY_CONFIG } from '../../services/notificationService';
+
 interface AdvisorWidgetProps {
   onOpenTrialModal: () => void;
 }
@@ -12,7 +14,7 @@ export const AdvisorWidget: React.FC<AdvisorWidgetProps> = ({ onOpenTrialModal }
     const text = encodeURIComponent(
       "Hi Knightesline Academy! I'm interested in finding the right chess coach and learning more about your courses."
     );
-    window.open(`https://wa.me/919876543210?text=${text}`, '_blank');
+    window.open(`https://wa.me/${ACADEMY_CONFIG.OWNER_PHONE}?text=${text}`, '_blank');
   };
 
   return (
@@ -72,7 +74,7 @@ export const AdvisorWidget: React.FC<AdvisorWidgetProps> = ({ onOpenTrialModal }
               className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition-all cursor-pointer"
             >
               <MessageCircle className="w-4 h-4" />
-              <span>Chat on WhatsApp (+91 98765 43210)</span>
+              <span>Chat on WhatsApp ({ACADEMY_CONFIG.OWNER_PHONE_FORMATTED})</span>
             </button>
 
             <button

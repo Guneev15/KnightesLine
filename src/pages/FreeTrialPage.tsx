@@ -15,6 +15,7 @@ import {
 import confetti from 'canvas-confetti';
 import { shatranjStore } from '../services/store';
 import { audioService } from '../services/audioService';
+import { notificationService, ACADEMY_CONFIG } from '../services/notificationService';
 import { FreeTrialBooking } from '../types';
 
 interface FreeTrialPageProps {
@@ -42,6 +43,19 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
     if (!studentName || !email || !phone) return;
 
     const newBooking = shatranjStore.addTrialBooking({
+      studentName,
+      email,
+      phone,
+      ageGrade,
+      playerLevel: level,
+      preferredDate: date,
+      preferredTime: time,
+      learningGoal,
+      coachPreference,
+    });
+
+    // Send real-time email notification to krish50023@gmail.com
+    notificationService.sendTrialBookingNotification({
       studentName,
       email,
       phone,
@@ -259,12 +273,28 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          <button
-            onClick={() => onNavigate('home')}
-            className="w-full btn-classic-gold py-3 rounded-xl font-bold text-xs uppercase tracking-wider"
-          >
-            Return to Academy Home ♞
-          </button>
+          <div className="space-y-2 pt-2">
+            <a
+              href={notificationService.getWhatsAppTrialLink(confirmedBooking)}
+              target="_blank"
+              rel="noreferrer"
+              className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition-all"
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span>Connect on WhatsApp ({ACADEMY_CONFIG.OWNER_PHONE_FORMATTED})</span>
+            </a>
+
+            <button
+              onClick={() => onNavigate('home')}
+              className="w-full btn-classic-gold py-3 rounded-xl font-bold text-xs uppercase tracking-wider"
+            >
+              Return to Academy Home ♞
+            </button>
+          </div>
+
+          <p className="text-[11px] text-slate-400">
+            A confirmation has been dispatched to admissions (<span className="text-amber-300 font-mono">{ACADEMY_CONFIG.OWNER_EMAIL}</span>).
+          </p>
         </div>
       )}
 

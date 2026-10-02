@@ -2,6 +2,7 @@ import { api } from './api';
 import { shatranjStore } from './store';
 import { SubscriptionPlan, PaymentRecord } from '../types';
 import { getMerchantRazorpayKey } from '../config/paymentConfig';
+import { notificationService } from './notificationService';
 
 export const loadRazorpayScript = (): Promise<boolean> => {
   return new Promise((resolve) => {
@@ -161,6 +162,16 @@ export const openOfficialRazorpay = async ({
           shatranjStore.updateUser({
             subscriptionTier: plan.id.includes('elite') ? 'elite' : 'pro',
             subscriptionValidUntil: validUntil.toISOString().split('T')[0],
+          });
+
+          // Dispatch instant email notification to academy owner
+          notificationService.sendEnrollmentPaymentNotification({
+            planName: plan.name,
+            amount: price,
+            billingCycle,
+            studentName: user?.name,
+            studentEmail: user?.email,
+            paymentId: response.razorpay_payment_id,
           });
 
           onSuccess(savedPayment);

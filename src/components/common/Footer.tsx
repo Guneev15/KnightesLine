@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Crown, Heart, Shield, CheckCircle2, Send, Lock, ArrowRight, Sparkles } from 'lucide-react';
 import { audioService } from '../../services/audioService';
+import { notificationService } from '../../services/notificationService';
 import { PaymentSecurityBadges } from './PaymentLogos';
 
 interface FooterProps {
@@ -18,6 +19,10 @@ export const Footer: React.FC<FooterProps> = ({ currentPath, onNavigate, onOpenT
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !email.includes('@')) return;
+    
+    // Dispatch real-time newsletter alert to owner email
+    notificationService.sendNewsletterNotification(email);
+    
     setSubscribed(true);
     audioService.playVictory();
     setTimeout(() => {

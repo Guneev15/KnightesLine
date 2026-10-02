@@ -28,7 +28,6 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
   const [phone, setPhone] = useState('');
   const [ageGrade, setAgeGrade] = useState('Age 10 (Grade 5)');
   const [coachPreference, setCoachPreference] = useState('Senior Academy Instructor');
-  const [autoOpenWhatsApp, setAutoOpenWhatsApp] = useState(true);
   const [confirmedBooking, setConfirmedBooking] = useState<FreeTrialBooking | null>(null);
 
   if (!isOpen) return null;
@@ -96,10 +95,6 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
         colors: ['#f59e0b', '#10b981', '#6366f1', '#ec4899']
       });
     } catch {}
-
-    if (autoOpenWhatsApp) {
-      notificationService.launchWhatsAppConfirmation(newBooking);
-    }
 
     if (onBookingSuccess) {
       onBookingSuccess(newBooking);
@@ -305,18 +300,10 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
                   onChange={(e) => setPhone(e.target.value)}
                   className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-amber-400"
                 />
-                <div className="flex items-center gap-2 mt-2 p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-[11px] text-slate-300">
-                  <input
-                    type="checkbox"
-                    id="autoWhatsAppModal"
-                    checked={autoOpenWhatsApp}
-                    onChange={(e) => setAutoOpenWhatsApp(e.target.checked)}
-                    className="w-3.5 h-3.5 rounded text-emerald-500 focus:ring-emerald-400 bg-slate-950 border-slate-700 cursor-pointer"
-                  />
-                  <label htmlFor="autoWhatsAppModal" className="cursor-pointer select-none">
-                    Instant WhatsApp: Send confirmation ticket &amp; classroom invite to my WhatsApp
-                  </label>
-                </div>
+                <p className="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  <span>Classroom access link &amp; schedule reminder will be sent to this number.</span>
+                </p>
               </div>
 
               <div>
@@ -403,16 +390,6 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
 
               {/* Action buttons */}
               <div className="flex flex-col gap-2 pt-2 justify-center max-w-sm mx-auto">
-                <a
-                  href={notificationService.getWhatsAppTrialLink(confirmedBooking)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-full py-3 rounded-xl border border-emerald-400/50 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/25"
-                >
-                  <MessageSquare className="w-4 h-4" />
-                  <span>Open WhatsApp Confirmation (+91 98726 99997)</span>
-                </a>
-
                 <button
                   onClick={() => {
                     const icsData = `BEGIN:VCALENDAR\nVERSION:2.0\nSUMMARY:Knightesline Chess Trial Class with ${confirmedBooking.coachPreference}\nDESCRIPTION:Interactive live chess session\nSTATUS:CONFIRMED\nEND:VCALENDAR`;
@@ -425,11 +402,21 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
                     link.click();
                     document.body.removeChild(link);
                   }}
-                  className="w-full py-2.5 rounded-xl border border-slate-700 bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition-colors flex items-center justify-center gap-1.5"
+                  className="w-full py-3 rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20"
                 >
-                  <Download className="w-3.5 h-3.5 text-[#d4af37]" />
-                  <span>Add to Calendar (.ics)</span>
+                  <Download className="w-4 h-4 text-slate-950" />
+                  <span>Add Class to Calendar (.ics)</span>
                 </button>
+
+                <a
+                  href={notificationService.getWhatsAppTrialLink(confirmedBooking)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full py-2.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-semibold transition-all flex items-center justify-center gap-2"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  <span>Optional: Chat with Coach on WhatsApp ({ACADEMY_CONFIG.OWNER_PHONE_FORMATTED})</span>
+                </a>
               </div>
 
               <p className="text-[11px] text-slate-400">

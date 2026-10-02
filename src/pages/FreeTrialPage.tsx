@@ -36,7 +36,6 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
   const [phone, setPhone] = useState('');
   const [ageGrade, setAgeGrade] = useState('Age 11 (Grade 6)');
   const [coachPreference, setCoachPreference] = useState('Senior Academy Instructor');
-  const [autoOpenWhatsApp, setAutoOpenWhatsApp] = useState(true);
   const [confirmedBooking, setConfirmedBooking] = useState<FreeTrialBooking | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -67,10 +66,6 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
       learningGoal,
       coachPreference,
     });
-
-    if (autoOpenWhatsApp) {
-      notificationService.launchWhatsAppConfirmation(newBooking);
-    }
 
     setConfirmedBooking(newBooking);
     audioService.playVictory();
@@ -222,17 +217,9 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
                 />
               </div>
 
-              <div className="sm:col-span-2 flex items-center gap-2 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-slate-300">
-                <input
-                  type="checkbox"
-                  id="autoWhatsAppPage"
-                  checked={autoOpenWhatsApp}
-                  onChange={(e) => setAutoOpenWhatsApp(e.target.checked)}
-                  className="w-4 h-4 rounded text-emerald-500 focus:ring-emerald-400 bg-slate-950 border-slate-700 cursor-pointer"
-                />
-                <label htmlFor="autoWhatsAppPage" className="cursor-pointer select-none">
-                  Instant WhatsApp: Send confirmation ticket &amp; classroom invite directly to my WhatsApp
-                </label>
+              <div className="sm:col-span-2 text-xs text-slate-400 mt-1 flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Classroom access link &amp; evaluation schedule will be dispatched to this number.</span>
               </div>
             </div>
           </div>
@@ -283,8 +270,8 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
               <span>Confirmation email sent to <strong className="text-white">{confirmedBooking.email}</strong></span>
             </div>
             <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-300">
-              <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>WhatsApp confirmation prepared for <strong className="text-white">{confirmedBooking.phone}</strong></span>
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>Admissions alert recorded for <strong className="text-white">{confirmedBooking.phone}</strong></span>
             </div>
           </div>
 
@@ -303,23 +290,23 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          <div className="space-y-2 pt-2">
+          <div className="space-y-2.5 pt-2">
+            <button
+              onClick={() => onNavigate('home')}
+              className="w-full btn-classic-gold py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg"
+            >
+              Return to Academy Home ♞
+            </button>
+
             <a
               href={notificationService.getWhatsAppTrialLink(confirmedBooking)}
               target="_blank"
               rel="noreferrer"
-              className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition-all"
+              className="w-full py-2.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 font-semibold text-xs flex items-center justify-center gap-2 transition-all"
             >
               <MessageSquare className="w-4 h-4" />
-              <span>Open WhatsApp Confirmation ({ACADEMY_CONFIG.OWNER_PHONE_FORMATTED})</span>
+              <span>Optional: Chat with Coach on WhatsApp ({ACADEMY_CONFIG.OWNER_PHONE_FORMATTED})</span>
             </a>
-
-            <button
-              onClick={() => onNavigate('home')}
-              className="w-full btn-classic-gold py-3 rounded-xl font-bold text-xs uppercase tracking-wider"
-            >
-              Return to Academy Home ♞
-            </button>
           </div>
 
           <p className="text-[11px] text-slate-400">

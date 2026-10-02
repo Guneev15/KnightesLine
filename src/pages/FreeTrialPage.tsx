@@ -36,6 +36,7 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
   const [phone, setPhone] = useState('');
   const [ageGrade, setAgeGrade] = useState('Age 11 (Grade 6)');
   const [coachPreference, setCoachPreference] = useState('Senior Academy Instructor');
+  const [autoOpenWhatsApp, setAutoOpenWhatsApp] = useState(true);
   const [confirmedBooking, setConfirmedBooking] = useState<FreeTrialBooking | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -54,7 +55,7 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
       coachPreference,
     });
 
-    // Send real-time email notification to krish50023@gmail.com
+    // Send real-time email notification to krish50023@gmail.com and auto-response to student
     notificationService.sendTrialBookingNotification({
       studentName,
       email,
@@ -66,6 +67,10 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
       learningGoal,
       coachPreference,
     });
+
+    if (autoOpenWhatsApp) {
+      notificationService.launchWhatsAppConfirmation(newBooking);
+    }
 
     setConfirmedBooking(newBooking);
     audioService.playVictory();
@@ -216,6 +221,19 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
                   className="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white"
                 />
               </div>
+
+              <div className="sm:col-span-2 flex items-center gap-2 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-slate-300">
+                <input
+                  type="checkbox"
+                  id="autoWhatsAppPage"
+                  checked={autoOpenWhatsApp}
+                  onChange={(e) => setAutoOpenWhatsApp(e.target.checked)}
+                  className="w-4 h-4 rounded text-emerald-500 focus:ring-emerald-400 bg-slate-950 border-slate-700 cursor-pointer"
+                />
+                <label htmlFor="autoWhatsAppPage" className="cursor-pointer select-none">
+                  Instant WhatsApp: Send confirmation ticket &amp; classroom invite directly to my WhatsApp
+                </label>
+              </div>
             </div>
           </div>
 
@@ -258,6 +276,18 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
             </p>
           </div>
 
+          {/* Delivery Channel Status */}
+          <div className="space-y-2 text-left">
+            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-300">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>Confirmation email sent to <strong className="text-white">{confirmedBooking.email}</strong></span>
+            </div>
+            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-300">
+              <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>WhatsApp confirmation prepared for <strong className="text-white">{confirmedBooking.phone}</strong></span>
+            </div>
+          </div>
+
           <div className="p-4 rounded-2xl bg-slate-950 border border-amber-500/20 text-left text-xs space-y-2">
             <div className="flex justify-between">
               <span className="text-slate-400">Student:</span>
@@ -268,7 +298,7 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
               <span className="font-bold text-amber-400">{confirmedBooking.preferredDate} at {confirmedBooking.preferredTime}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">WhatsApp Alert:</span>
+              <span className="text-slate-400">WhatsApp Contact:</span>
               <span className="text-slate-200">{confirmedBooking.phone}</span>
             </div>
           </div>
@@ -281,7 +311,7 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
               className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition-all"
             >
               <MessageSquare className="w-4 h-4" />
-              <span>Connect on WhatsApp ({ACADEMY_CONFIG.OWNER_PHONE_FORMATTED})</span>
+              <span>Open WhatsApp Confirmation ({ACADEMY_CONFIG.OWNER_PHONE_FORMATTED})</span>
             </a>
 
             <button
@@ -293,7 +323,7 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
           </div>
 
           <p className="text-[11px] text-slate-400">
-            A confirmation has been dispatched to admissions (<span className="text-amber-300 font-mono">{ACADEMY_CONFIG.OWNER_EMAIL}</span>).
+            A confirmation copy has been emailed directly to our admissions board (<span className="text-amber-300 font-mono">{ACADEMY_CONFIG.OWNER_EMAIL}</span>).
           </p>
         </div>
       )}

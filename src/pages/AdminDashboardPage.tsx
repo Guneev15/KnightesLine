@@ -210,13 +210,21 @@ export const AdminDashboardPage: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full ${b.status === 'confirmed' ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' : 'bg-slate-800 text-slate-400'}`}>
                       ● {b.status.toUpperCase()}
                     </span>
+                    <a
+                      href={`https://wa.me/${b.phone.replace(/\D/g, '').slice(-10)}?text=${encodeURIComponent(`Hi ${b.studentName}! I am Coach Krish from Knightesline Chess Academy. Your free evaluation session is confirmed for ${b.preferredDate} at ${b.preferredTime}. Classroom link: https://knightesliner.tguneev.workers.dev/#/classroom`)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-3 py-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                    >
+                      <span>WhatsApp Student</span>
+                    </a>
                     <button
                       onClick={() => handleToggleBookingStatus(b.id)}
-                      className="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold"
+                      className="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors"
                     >
                       Toggle Status
                     </button>

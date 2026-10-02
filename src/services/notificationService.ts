@@ -1,3 +1,5 @@
+import { smsService } from './smsService';
+
 // Service to dispatch real-time lead and booking notifications to the academy owner.
 // Target Email: krish50023@gmail.com
 // Target WhatsApp: +91 98726 99997
@@ -117,6 +119,14 @@ Web: https://knightesliner.tguneev.workers.dev`;
           'Platform': 'Knightesline Chess Academy'
         }),
       });
+
+      // 2. Dispatch cellular SMS text via SMS gateway
+      smsService.sendBookingSMS({
+        to: data.phone,
+        studentName: data.studentName,
+        slotDate: data.preferredDate,
+        slotTime: data.preferredTime,
+      }).catch((e) => console.warn('SMS dispatch error:', e));
 
       return response.ok;
     } catch (err) {

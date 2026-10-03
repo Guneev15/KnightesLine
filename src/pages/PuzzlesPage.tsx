@@ -104,7 +104,7 @@ export const PuzzlesPage: React.FC = () => {
         </div>
 
         {/* Gamified counters: Streak & Puzzle Rating */}
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800">
             <Flame className="w-4 h-4 text-orange-500 fill-orange-500" />
             <span className="text-xs font-bold text-white font-mono">{streak} Days Streak</span>
@@ -129,7 +129,7 @@ export const PuzzlesPage: React.FC = () => {
         
         {/* Large Chessboard */}
         <div className="lg:col-span-7 flex flex-col items-center">
-          <div className="w-full max-w-[540px] p-4 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl">
+          <div className="w-full max-w-[540px] p-2.5 sm:p-4 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl">
             <div className="flex items-center justify-between pb-3 text-xs text-slate-400 border-b border-slate-800">
               <span className="font-semibold text-slate-200 capitalize">
                 {currentPuzzle.playerColor} to move

@@ -63,7 +63,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onOpenTrialModal }) =>
               className={`
                 p-8 rounded-3xl border transition-all flex flex-col justify-between
                 ${plan.popular
-                  ? 'border-amber-500 bg-gradient-to-b from-amber-500/10 via-slate-900/80 to-slate-900 shadow-2xl shadow-amber-500/10 relative scale-105 z-10'
+                  ? 'border-amber-500 bg-gradient-to-b from-amber-500/10 via-slate-900/80 to-slate-900 shadow-2xl shadow-amber-500/10 relative md:scale-105 z-10'
                   : 'border-slate-800 bg-slate-900/50 hover:border-slate-700'
                 }
               `}

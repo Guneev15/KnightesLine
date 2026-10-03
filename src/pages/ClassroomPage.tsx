@@ -126,7 +126,7 @@ export const ClassroomPage: React.FC = () => {
         </div>
 
         {/* Video & Media Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => setMicMuted(!micMuted)}
             className={`p-2.5 rounded-xl border transition-colors ${micMuted ? 'bg-red-500/20 border-red-500/40 text-red-400' : 'bg-slate-800 border-slate-700 text-slate-200'}`}
@@ -163,7 +163,7 @@ export const ClassroomPage: React.FC = () => {
         
         {/* Main Live Board (8 cols) */}
         <div className="lg:col-span-8 flex flex-col items-center">
-          <div className="w-full max-w-[560px] p-4 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl">
+          <div className="w-full max-w-[560px] p-2.5 sm:p-4 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl">
             <div className="flex items-center justify-between pb-3 text-xs text-slate-400 border-b border-slate-800">
               <span className="font-semibold text-white flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-amber-400" />

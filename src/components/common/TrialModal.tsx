@@ -108,8 +108,8 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-xl rounded-2xl bg-[#0f131d] border border-slate-700/80 shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-xl max-h-[92vh] overflow-y-auto rounded-2xl bg-[#0f131d] border border-slate-700/80 shadow-2xl">
         
         {/* Header bar */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/50">
@@ -242,7 +242,7 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
           {/* STEP 2: Student & Contact Details */}
           {step === 2 && (
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1">
                     <User className="w-3.5 h-3.5 text-amber-400" />
@@ -254,7 +254,7 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
                     placeholder="e.g. Aarav Sharma"
                     value={studentName}
                     onChange={(e) => setStudentName(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-amber-400"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-amber-400"
                   />
                 </div>
                 <div>
@@ -267,7 +267,7 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, onBooki
                     placeholder="e.g. Age 11 (Grade 6)"
                     value={ageGrade}
                     onChange={(e) => setAgeGrade(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-amber-400"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-amber-400"
                   />
                 </div>
               </div>

@@ -110,36 +110,36 @@ export const AdminDashboardPage: React.FC = () => {
       {activeTab === 'analytics' && (
         <div className="space-y-8">
           {/* 4 Core Business KPIs */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             
-            <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+            <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Monthly Recurring (MRR)</span>
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-black text-emerald-400 font-mono">₹4,82,000</span>
+                <span className="text-2xl sm:text-3xl font-black text-emerald-400 font-mono">₹4,82,000</span>
               </div>
               <span className="text-[11px] text-emerald-400 block font-medium">+18.4% growth vs last month</span>
             </div>
 
-            <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+            <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Active Paid Students</span>
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-black text-white font-mono">1,420</span>
+                <span className="text-2xl sm:text-3xl font-black text-white font-mono">1,420</span>
               </div>
               <span className="text-[11px] text-slate-400 block">Churn rate: 2.1% (Low)</span>
             </div>
 
-            <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+            <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Trial → Paid Conversion</span>
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-black text-amber-400 font-mono">82.4%</span>
+                <span className="text-2xl sm:text-3xl font-black text-amber-400 font-mono">82.4%</span>
               </div>
               <span className="text-[11px] text-amber-300 block font-medium">High conversion post-trial</span>
             </div>
 
-            <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+            <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Coach Utilization</span>
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-black text-purple-400 font-mono">91.5%</span>
+                <span className="text-2xl sm:text-3xl font-black text-purple-400 font-mono">91.5%</span>
               </div>
               <span className="text-[11px] text-slate-400 block">50 Titled Coaches active</span>
             </div>

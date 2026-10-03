@@ -99,13 +99,13 @@ export const AnalysisPage: React.FC = () => {
       </div>
 
       {/* Accuracy Cards & Turning Point Banner */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         
         {/* Overall Accuracy */}
-        <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Overall Accuracy</span>
+        <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+          <span className="text-[11px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider block">Overall Accuracy</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-amber-400 font-mono">{analysis.accuracyWhite}%</span>
+            <span className="text-2xl sm:text-3xl font-black text-amber-400 font-mono">{analysis.accuracyWhite}%</span>
             <span className="text-xs text-slate-400">White</span>
           </div>
           <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
@@ -114,11 +114,11 @@ export const AnalysisPage: React.FC = () => {
         </div>
 
         {/* Opening Accuracy */}
-        <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Opening Phase</span>
+        <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+          <span className="text-[11px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider block">Opening Phase</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-emerald-400 font-mono">{analysis.openingAccuracy}%</span>
-            <span className="text-xs text-slate-400">{analysis.openingName.split(':')[0]}</span>
+            <span className="text-2xl sm:text-3xl font-black text-emerald-400 font-mono">{analysis.openingAccuracy}%</span>
+            <span className="text-xs text-slate-400 truncate max-w-[120px]">{analysis.openingName.split(':')[0]}</span>
           </div>
           <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
             <div className="h-full bg-emerald-400 rounded-full" style={{ width: `${analysis.openingAccuracy}%` }} />
@@ -126,10 +126,10 @@ export const AnalysisPage: React.FC = () => {
         </div>
 
         {/* Middlegame Accuracy */}
-        <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Middlegame Phase</span>
+        <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+          <span className="text-[11px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider block">Middlegame Phase</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-blue-400 font-mono">{analysis.middlegameAccuracy}%</span>
+            <span className="text-2xl sm:text-3xl font-black text-blue-400 font-mono">{analysis.middlegameAccuracy}%</span>
             <span className="text-xs text-slate-400">Tactics</span>
           </div>
           <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
@@ -138,10 +138,10 @@ export const AnalysisPage: React.FC = () => {
         </div>
 
         {/* Endgame Accuracy */}
-        <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Endgame Conversion</span>
+        <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+          <span className="text-[11px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider block">Endgame Conversion</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-purple-400 font-mono">{analysis.endgameAccuracy}%</span>
+            <span className="text-2xl sm:text-3xl font-black text-purple-400 font-mono">{analysis.endgameAccuracy}%</span>
             <span className="text-xs text-slate-400">Conversion</span>
           </div>
           <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
@@ -180,7 +180,7 @@ export const AnalysisPage: React.FC = () => {
         
         {/* Left Board View */}
         <div className="lg:col-span-7 flex flex-col items-center">
-          <div className="w-full max-w-[540px] p-4 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl">
+          <div className="w-full max-w-[540px] p-2.5 sm:p-4 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl">
             <div className="flex items-center justify-between pb-3 text-xs text-slate-400 border-b border-slate-800">
               <span className="font-semibold text-slate-200">
                 Move {selectedMoment.moveNumber}: {selectedMoment.move} ({selectedMoment.classification.toUpperCase()})

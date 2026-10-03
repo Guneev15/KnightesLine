@@ -97,7 +97,7 @@ export const FreeTrialPage: React.FC<FreeTrialPageProps> = ({ onNavigate }) => {
       </div>
 
       {!confirmedBooking ? (
-        <form onSubmit={handleSubmit} className="p-8 rounded-3xl border border-slate-800 bg-slate-900/60 shadow-2xl space-y-8">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-800 bg-slate-900/60 shadow-2xl space-y-6 sm:space-y-8">
           
           {/* Section 1: Level */}
           <div className="space-y-3">

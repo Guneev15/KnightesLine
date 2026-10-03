@@ -247,11 +247,11 @@ export const ChessBoard: React.FC<ChessBoardProps> = ({
   };
 
   return (
-    <div className={`relative select-none ${className}`}>
+    <div className={`relative select-none touch-manipulation ${className}`}>
       {/* Luxury Tournament Board Bezel Casing */}
-      <div className="relative aspect-square w-full max-w-[560px] mx-auto p-1.5 sm:p-2.5 rounded-2xl bg-gradient-to-b from-[#1e2330] via-[#141822] to-[#0c0e14] border border-[#d4af37]/30 shadow-[0_20px_50px_rgba(0,0,0,0.85)]">
+      <div className="relative aspect-square w-full max-w-[560px] mx-auto p-1 sm:p-2.5 rounded-xl sm:rounded-2xl bg-gradient-to-b from-[#1e2330] via-[#141822] to-[#0c0e14] border border-[#d4af37]/30 shadow-[0_20px_50px_rgba(0,0,0,0.85)]">
         {/* Inner Board Surface with Bevel Inset Shadow */}
-        <div className="relative w-full h-full rounded-xl overflow-hidden shadow-[inset_0_2px_8px_rgba(0,0,0,0.65)]">
+        <div className="relative w-full h-full rounded-lg sm:rounded-xl overflow-hidden shadow-[inset_0_2px_8px_rgba(0,0,0,0.65)]">
           <div className="grid grid-cols-8 grid-rows-8 w-full h-full">
             {displayRanks.map((rank) =>
               displayFiles.map((file) => {
@@ -324,14 +324,14 @@ export const ChessBoard: React.FC<ChessBoardProps> = ({
 
                     {/* Chess.com-style coordinates: Rank on top-left of first file */}
                     {showRank && (
-                      <span className={`absolute top-0.5 left-1 text-[10px] sm:text-[11px] font-bold font-mono select-none pointer-events-none opacity-90 leading-none ${coordColor}`}>
+                      <span className={`absolute top-0.5 left-1 text-[8px] sm:text-[11px] font-bold font-mono select-none pointer-events-none opacity-90 leading-none ${coordColor}`}>
                         {rank}
                       </span>
                     )}
 
                     {/* Chess.com-style coordinates: File on bottom-right of bottom rank */}
                     {showFile && (
-                      <span className={`absolute bottom-0.5 right-1 text-[10px] sm:text-[11px] font-bold font-mono select-none pointer-events-none opacity-90 leading-none ${coordColor}`}>
+                      <span className={`absolute bottom-0.5 right-1 text-[8px] sm:text-[11px] font-bold font-mono select-none pointer-events-none opacity-90 leading-none ${coordColor}`}>
                         {file}
                       </span>
                     )}

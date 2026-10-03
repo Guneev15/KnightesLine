@@ -242,10 +242,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
               </div>
 
-              {/* Log In Button */}
+              {/* Log In Button (Hidden on tiny screens to avoid header squish; available in mobile drawer) */}
               <button
                 onClick={() => onNavigate('login')}
-                className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800/80 border border-slate-700/80 transition-all font-serif-classic tracking-wider"
+                className="hidden sm:inline-flex px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800/80 border border-slate-700/80 transition-all font-serif-classic tracking-wider"
               >
                 Log In
               </button>
@@ -253,7 +253,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* Primary CTA: Book Free Trial */}
               <button
                 onClick={onOpenTrialModal}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-serif-classic font-bold btn-classic-gold tracking-wide whitespace-nowrap shadow-md flex-shrink-0"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-[11px] sm:text-xs font-serif-classic font-bold btn-classic-gold tracking-wide whitespace-nowrap shadow-md flex-shrink-0"
               >
                 <span>Free Trial</span>
                 <span className="text-xs">♞</span>

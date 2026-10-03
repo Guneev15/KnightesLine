@@ -140,7 +140,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenTrialModal
               
 
               {/* Main Headline */}
-              <h1 className="text-4xl sm:text-6xl xl:text-7xl font-bold tracking-tight text-slate-100 leading-[1.06] font-serif-classic">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-slate-100 leading-[1.08] font-serif-classic">
                 Master the <br />
                 <span className="bg-gradient-to-r from-[#faecd0] via-[#eed187] to-[#d4af37] bg-clip-text text-transparent">
                   Royal Game.
@@ -148,22 +148,22 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenTrialModal
               </h1>
 
               {/* Subheadline */}
-              <p className="text-xl sm:text-2xl text-slate-200 max-w-xl mx-auto lg:mx-0 font-serif-garamond italic">
-                Classical mastery meets modern calculation. <span className="text-amber-400 not-italic font-sans font-bold text-lg">Stop blundering queens.</span>
+              <p className="text-lg sm:text-2xl text-slate-200 max-w-xl mx-auto lg:mx-0 font-serif-garamond italic">
+                Classical mastery meets modern calculation. <span className="text-amber-400 not-italic font-sans font-bold text-base sm:text-lg">Stop blundering queens.</span>
               </p>
 
-              <p className="text-sm text-slate-400 max-w-lg mx-auto lg:mx-0 leading-relaxed font-serif-garamond text-base sm:text-lg">
+              <p className="text-xs sm:text-sm text-slate-400 max-w-lg mx-auto lg:mx-0 leading-relaxed font-serif-garamond text-base sm:text-lg">
                 Knightesline transforms chess from tedious memorization into an exhilarating intellectual journey. Tailored for ambitious juniors, competitive scholastic prodigies, and determined adult improvers.
               </p>
 
               {/* CTA Buttons */}
-              <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+              <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
                 <button
                   onClick={() => {
                     audioService.playMove();
                     onOpenTrialModal();
                   }}
-                  className="w-full sm:w-auto btn-classic-gold px-8 py-4 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider shadow-2xl flex items-center justify-center gap-3 group cursor-pointer"
+                  className="w-full sm:w-auto btn-classic-gold px-6 py-3.5 sm:px-8 sm:py-4 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider shadow-2xl flex items-center justify-center gap-3 group cursor-pointer"
                 >
                   <span>Book Free Trial Session</span>
                   <span className="text-lg group-hover:translate-x-1 transition-transform">♞</span>
@@ -174,7 +174,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenTrialModal
                     audioService.playMove();
                     onNavigate('courses');
                   }}
-                  className="w-full sm:w-auto px-7 py-4 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider border border-amber-500/30 hover:border-amber-400 bg-slate-900/80 hover:bg-slate-800 text-slate-200 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3.5 sm:px-7 sm:py-4 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider border border-amber-500/30 hover:border-amber-400 bg-slate-900/80 hover:bg-slate-800 text-slate-200 transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Explore Curriculum</span>
                   <ArrowRight className="w-4 h-4 text-amber-400" />
@@ -182,37 +182,37 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenTrialModal
               </div>
 
               {/* Trust Indicators */}
-              <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-slate-300">
+              <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-6 text-xs text-slate-300">
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span>No payment required for trial</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span>1-on-1 private Grandmaster board</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span>Tuition from ₹799/month</span>
                 </div>
               </div>
 
               {/* Social Proof Metric Counters Grid */}
-              <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto lg:mx-0 border-t border-slate-800/80">
-                <div className="p-3 rounded-xl bg-slate-900/50 border border-slate-800/80">
-                  <div className="text-xl sm:text-2xl font-bold font-mono text-amber-300">2,400+</div>
+              <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 max-w-xl mx-auto lg:mx-0 border-t border-slate-800/80">
+                <div className="p-2.5 sm:p-3 rounded-xl bg-slate-900/50 border border-slate-800/80">
+                  <div className="text-lg sm:text-2xl font-bold font-mono text-amber-300">2,400+</div>
                   <div className="text-[10px] text-slate-400 uppercase tracking-wider font-serif-classic mt-0.5">Prodigies Coached</div>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900/50 border border-slate-800/80">
-                  <div className="text-xl sm:text-2xl font-bold font-mono text-emerald-400">+240</div>
+                <div className="p-2.5 sm:p-3 rounded-xl bg-slate-900/50 border border-slate-800/80">
+                  <div className="text-lg sm:text-2xl font-bold font-mono text-emerald-400">+240</div>
                   <div className="text-[10px] text-slate-400 uppercase tracking-wider font-serif-classic mt-0.5">Avg Elo Surge</div>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900/50 border border-slate-800/80">
-                  <div className="text-xl sm:text-2xl font-bold font-mono text-amber-300">100%</div>
+                <div className="p-2.5 sm:p-3 rounded-xl bg-slate-900/50 border border-slate-800/80">
+                  <div className="text-lg sm:text-2xl font-bold font-mono text-amber-300">100%</div>
                   <div className="text-[10px] text-slate-400 uppercase tracking-wider font-serif-classic mt-0.5">FIDE Titled Faculty</div>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900/50 border border-slate-800/80">
-                  <div className="text-xl sm:text-2xl font-bold font-mono text-slate-100 flex items-center gap-1">
+                <div className="p-2.5 sm:p-3 rounded-xl bg-slate-900/50 border border-slate-800/80">
+                  <div className="text-lg sm:text-2xl font-bold font-mono text-slate-100 flex items-center gap-1">
                     <span>4.98</span>
                     <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                   </div>
@@ -223,43 +223,43 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenTrialModal
             </div>
 
             {/* Right Hero Column: Grandmaster Arena Card */}
-            <div className="lg:col-span-6 flex flex-col items-center">
-              <div className="relative w-full max-w-[500px] p-3.5 sm:p-4 rounded-3xl bg-[#0f131c]/90 border border-amber-500/25 shadow-[0_25px_60px_rgba(0,0,0,0.85)] backdrop-blur-xl space-y-3">
+            <div className="lg:col-span-6 flex flex-col items-center w-full">
+              <div className="relative w-full max-w-[500px] p-2.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-[#0f131c]/90 border border-amber-500/25 shadow-[0_25px_60px_rgba(0,0,0,0.85)] backdrop-blur-xl space-y-2.5 sm:space-y-3">
                 
                 {/* Top Player Card (Grandmaster Opponent) */}
-                <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/70 border border-slate-800/90 text-xs">
-                  <div className="flex items-center gap-2.5">
+                <div className="flex items-center justify-between p-2 sm:p-2.5 rounded-xl bg-slate-950/70 border border-slate-800/90 text-xs gap-2">
+                  <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
                     {/* GM Avatar */}
-                    <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 p-0.5 shadow-md flex-shrink-0">
-                      <div className="w-full h-full rounded-[10px] bg-slate-900 flex items-center justify-center font-bold text-amber-400 text-sm">
+                    <div className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 p-0.5 shadow-md flex-shrink-0">
+                      <div className="w-full h-full rounded-[10px] bg-slate-900 flex items-center justify-center font-bold text-amber-400 text-xs sm:text-sm">
                         AM
                       </div>
                       <span className="absolute -bottom-1 -right-1 px-1 rounded bg-amber-500 text-slate-950 font-bold text-[8px] leading-tight shadow">
                         GM
                       </span>
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-bold text-slate-100 text-sm">Aditya Mittal</span>
-                        <span className="text-[10px] text-slate-400">🇮🇳</span>
+                        <span className="font-bold text-slate-100 text-xs sm:text-sm truncate">Aditya Mittal</span>
+                        <span className="text-[10px] text-slate-400 flex-shrink-0">🇮🇳</span>
                       </div>
-                      <div className="text-[10px] text-amber-400/90 font-mono flex items-center gap-1">
+                      <div className="text-[10px] text-amber-400/90 font-mono flex items-center gap-1 truncate">
                         <span>FIDE 2615</span>
                         <span className="text-slate-600">•</span>
-                        <span className="text-slate-400 font-sans">Head Mentor</span>
+                        <span className="text-slate-400 font-sans truncate">Head Mentor</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Digital Chess Clock Display */}
-                  <div className="chess-clock-bezel px-3 py-1.5 rounded-lg flex items-center gap-2 font-mono text-slate-200">
-                    <span className="w-2 h-2 rounded-full bg-slate-600" />
-                    <span className="text-sm font-bold tracking-wider">05:00</span>
+                  <div className="chess-clock-bezel px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg flex items-center gap-1.5 sm:gap-2 font-mono text-slate-200 flex-shrink-0">
+                    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-slate-600" />
+                    <span className="text-xs sm:text-sm font-bold tracking-wider">05:00</span>
                   </div>
                 </div>
 
                 {/* Tournament Chessboard */}
-                <div className="relative">
+                <div className="relative w-full">
                   <ChessBoard
                     game={heroGame}
                     onMove={handleHeroMove}
@@ -269,53 +269,53 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenTrialModal
                 </div>
 
                 {/* Bottom Player Card (The Student Challenger) */}
-                <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/70 border border-slate-800/90 text-xs">
-                  <div className="flex items-center gap-2.5">
+                <div className="flex items-center justify-between p-2 sm:p-2.5 rounded-xl bg-slate-950/70 border border-slate-800/90 text-xs gap-2">
+                  <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
                     {/* User Avatar */}
-                    <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 p-0.5 shadow-md flex-shrink-0">
-                      <div className="w-full h-full rounded-[10px] bg-slate-900 flex items-center justify-center font-bold text-emerald-400 text-sm">
+                    <div className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 p-0.5 shadow-md flex-shrink-0">
+                      <div className="w-full h-full rounded-[10px] bg-slate-900 flex items-center justify-center font-bold text-emerald-400 text-xs sm:text-sm">
                         ♟
                       </div>
                       <span className="absolute -bottom-1 -right-1 px-1 rounded bg-emerald-500 text-slate-950 font-bold text-[8px] leading-tight shadow">
                         YOU
                       </span>
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-bold text-slate-100 text-sm">Student Challenger</span>
-                        <span className="text-[10px] text-slate-400">🇮🇳</span>
+                        <span className="font-bold text-slate-100 text-xs sm:text-sm truncate">Student Challenger</span>
+                        <span className="text-[10px] text-slate-400 flex-shrink-0">🇮🇳</span>
                       </div>
-                      <div className="text-[10px] text-emerald-400/90 font-mono flex items-center gap-1">
+                      <div className="text-[10px] text-emerald-400/90 font-mono flex items-center gap-1 truncate">
                         <span>1500 Elo</span>
                         <span className="text-slate-600">•</span>
-                        <span className="text-slate-400 font-sans">White to Move</span>
+                        <span className="text-slate-400 font-sans truncate">White to Move</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Digital Chess Clock Display (Active) */}
-                  <div className="chess-clock-bezel px-3 py-1.5 rounded-lg flex items-center gap-2 font-mono text-emerald-300 border-emerald-500/40">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-sm font-bold tracking-wider">04:58</span>
+                  <div className="chess-clock-bezel px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg flex items-center gap-1.5 sm:gap-2 font-mono text-emerald-300 border-emerald-500/40 flex-shrink-0">
+                    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-xs sm:text-sm font-bold tracking-wider">04:58</span>
                   </div>
                 </div>
 
                 {/* Match Evaluation & Interactive Controls Bar */}
-                <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2 truncate max-w-[280px]">
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-mono font-bold">
+                <div className="p-2 sm:p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center justify-between text-xs gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-1 truncate">
+                    <span className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-mono font-bold flex-shrink-0">
                       +0.2
                     </span>
-                    <div className="text-slate-400 text-[11px] truncate">
+                    <div className="text-slate-400 text-[10px] sm:text-[11px] truncate">
                       {heroMoveLog.length > 0 ? (
                         <span>Moves: <strong className="text-amber-400 font-mono">{heroMoveLog.join(' ')}</strong></span>
                       ) : (
-                        <span className="italic text-slate-400">Drag or click any white piece to play</span>
+                        <span className="italic text-slate-400 truncate">Drag or click to play</span>
                       )}
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 flex-shrink-0">
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
                     <button
                       onClick={resetHeroGame}
                       title="Reset Position"
@@ -325,7 +325,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenTrialModal
                     </button>
                     <button
                       onClick={() => onNavigate('play')}
-                      className="text-[11px] font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 font-serif-classic"
+                      className="text-[10px] sm:text-[11px] font-bold text-amber-400 hover:text-amber-300 flex items-center gap-0.5 sm:gap-1 font-serif-classic"
                     >
                       <span>Full Arena</span>
                       <ChevronRight className="w-3.5 h-3.5" />

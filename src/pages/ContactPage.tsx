@@ -93,7 +93,7 @@ export const ContactPage: React.FC = () => {
 
         {/* Contact Form (7 cols) */}
         <div className="md:col-span-7">
-          <div className="p-8 rounded-3xl border border-slate-800 bg-slate-900/70 shadow-2xl">
+          <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-800 bg-slate-900/70 shadow-2xl">
             {!ticketSent ? (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <h3 className="text-base font-bold text-white mb-2">Send an Academic Inquiry</h3>

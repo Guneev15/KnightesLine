@@ -72,42 +72,42 @@ export const ParentDashboardPage: React.FC<ParentDashboardProps> = ({ onNavigate
       </div>
 
       {/* Top 4 Child Metric Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         
         {/* Rating Growth */}
-        <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+        <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
           <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Skill Level</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-white font-mono">{child.rating}</span>
+            <span className="text-2xl sm:text-3xl font-black text-white font-mono">{child.rating}</span>
             <span className="text-xs font-bold text-emerald-400">+{child.monthlyRatingDelta} this month</span>
           </div>
           <span className="text-[11px] text-slate-400 block">Class Level: Intermediate Junior</span>
         </div>
 
         {/* Classes Attended */}
-        <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+        <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
           <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Attendance</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-amber-400 font-mono">100%</span>
+            <span className="text-2xl sm:text-3xl font-black text-amber-400 font-mono">100%</span>
             <span className="text-xs text-slate-400">(12 of 12 classes)</span>
           </div>
           <span className="text-[11px] text-emerald-400 block font-medium">Perfect attendance award</span>
         </div>
 
         {/* Learning Streak */}
-        <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+        <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
           <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Daily Discipline</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-orange-400 font-mono">{child.streakDays} Days</span>
+            <span className="text-2xl sm:text-3xl font-black text-orange-400 font-mono">{child.streakDays} Days</span>
           </div>
           <span className="text-[11px] text-slate-400 block">Practices 15 mins daily</span>
         </div>
 
         {/* Membership */}
-        <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+        <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
           <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Plan & Billing</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-black text-white uppercase">{child.subscriptionTier} Plan</span>
+            <span className="text-xl sm:text-2xl font-black text-white uppercase">{child.subscriptionTier} Plan</span>
           </div>
           <span className="text-[11px] text-slate-400 block">Next auto-renewal: Oct 25</span>
         </div>
@@ -187,14 +187,14 @@ export const ParentDashboardPage: React.FC<ParentDashboardProps> = ({ onNavigate
           </h2>
 
           <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/70 space-y-3 text-xs">
-            <div className="flex items-center justify-between p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
               <div>
                 <div className="font-bold text-white">Upcoming: Tactical Vision Masterclass</div>
                 <div className="text-slate-400 mt-0.5">Today at 5:00 PM IST (with IM Vikram)</div>
               </div>
               <button
                 onClick={() => onNavigate('classroom')}
-                className="px-3 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs"
+                className="w-full sm:w-auto px-3.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs"
               >
                 Join with Child
               </button>

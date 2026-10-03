@@ -32,7 +32,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenTrialMod
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         
         {/* The Old Way */}
-        <div className="p-8 rounded-3xl border border-red-500/20 bg-red-500/5 space-y-4 classic-card">
+        <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-red-500/20 bg-red-500/5 space-y-4 classic-card">
           <div className="text-xs font-bold text-red-400 uppercase tracking-wider font-serif-classic">The Traditional Problem</div>
           <h2 className="text-xl font-bold text-white font-serif-classic">How Chess Has Been Taught for Decades</h2>
           <ul className="space-y-3 text-xs text-slate-300">
@@ -56,7 +56,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenTrialMod
         </div>
 
         {/* The Knightesline Academy Way */}
-        <div className="p-8 rounded-3xl border border-amber-500/30 bg-amber-500/5 space-y-4 classic-card">
+        <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-amber-500/30 bg-amber-500/5 space-y-4 classic-card">
           <div className="text-xs font-bold text-amber-400 uppercase tracking-wider font-serif-classic">The Knightesline Way</div>
           <h2 className="text-xl font-bold text-white font-serif-classic">Active, Regal & Measurable Mastery</h2>
           <ul className="space-y-3 text-xs text-slate-300">
@@ -119,7 +119,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenTrialMod
       </div>
 
       {/* CTA Box */}
-      <div className="p-10 rounded-3xl border border-amber-500/30 bg-gradient-to-br from-amber-500/15 via-slate-900 to-[#0e1218] text-center space-y-4 classic-card gold-filament">
+      <div className="p-6 sm:p-10 rounded-2xl sm:rounded-3xl border border-amber-500/30 bg-gradient-to-br from-amber-500/15 via-slate-900 to-[#0e1218] text-center space-y-4 classic-card gold-filament">
         <h3 className="text-2xl sm:text-3xl font-bold text-white font-serif-classic">Experience Knightesline Academy for Free</h3>
         <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto font-serif-garamond text-base">
           Book a 45-minute live trial session with an International Master. See how our classical pedagogy transforms your tactical vision.

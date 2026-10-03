@@ -94,41 +94,41 @@ export const CoachDashboardPage: React.FC<CoachDashboardProps> = ({ onNavigate }
       </div>
 
       {/* 4 Metric Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         
         {/* Monthly Earnings */}
-        <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+        <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
           <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Month Earnings</span>
           <div className="flex items-baseline gap-1">
-            <span className="text-3xl font-black text-emerald-400 font-mono">₹48,500</span>
+            <span className="text-2xl sm:text-3xl font-black text-emerald-400 font-mono">₹48,500</span>
           </div>
           <span className="text-[11px] text-slate-400 block">32 sessions conducted</span>
         </div>
 
         {/* Active Students */}
-        <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+        <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
           <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Active Mentees</span>
           <div className="flex items-baseline gap-1">
-            <span className="text-3xl font-black text-white font-mono">24 Students</span>
+            <span className="text-2xl sm:text-3xl font-black text-white font-mono">24 Students</span>
           </div>
           <span className="text-[11px] text-emerald-400 block font-medium">+3 new trial conversions</span>
         </div>
 
         {/* Coach Rating */}
-        <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+        <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
           <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Student Rating</span>
           <div className="flex items-center gap-2">
-            <span className="text-3xl font-black text-amber-400 font-mono">{coach.rating}</span>
+            <span className="text-2xl sm:text-3xl font-black text-amber-400 font-mono">{coach.rating}</span>
             <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
           </div>
           <span className="text-[11px] text-slate-400 block">From {coach.reviewCount} parent reviews</span>
         </div>
 
         {/* Hours Coached */}
-        <div className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
+        <div className="p-4 sm:p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-2">
           <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Total Hours</span>
           <div className="flex items-baseline gap-1">
-            <span className="text-3xl font-black text-white font-mono">340+ hrs</span>
+            <span className="text-2xl sm:text-3xl font-black text-white font-mono">340+ hrs</span>
           </div>
           <span className="text-[11px] text-slate-400 block">11 years coaching experience</span>
         </div>

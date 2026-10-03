@@ -74,14 +74,14 @@ export const CoachesPage: React.FC<CoachesPageProps> = ({ onNavigate, onOpenTria
         {filtered.map((coach: Coach) => (
           <div
             key={coach.id}
-            className="p-6 rounded-2xl border border-slate-800 bg-slate-900/50 hover:border-amber-500/40 transition-all flex flex-col justify-between group"
+            className="p-5 sm:p-6 rounded-2xl border border-slate-800 bg-slate-900/50 hover:border-amber-500/40 transition-all flex flex-col justify-between group"
           >
             <div className="space-y-4">
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-3.5 sm:gap-4">
                 <img
                   src={coach.avatar}
                   alt={coach.name}
-                  className="w-20 h-20 rounded-2xl object-cover ring-2 ring-slate-800 group-hover:ring-amber-500/50 transition-all shrink-0"
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover ring-2 ring-slate-800 group-hover:ring-amber-500/50 transition-all shrink-0"
                 />
                 <div>
                   <div className="inline-block px-2.5 py-0.5 rounded bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[10px] font-bold">

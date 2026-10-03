@@ -138,11 +138,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenTrialModal
             {/* Left Copy Column */}
             <div className="lg:col-span-6 space-y-6 text-center lg:text-left">
               
-              {/* Premium Accreditation Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/15 to-amber-600/10 border border-amber-500/30 text-amber-300 text-[11px] font-bold uppercase tracking-wider font-serif-classic shadow-sm">
-                <Crown className="w-3.5 h-3.5 text-amber-400" />
-                <span>Premier FIDE-Aligned Academy • Grandmaster Mentorship</span>
-              </div>
 
               {/* Main Headline */}
               <h1 className="text-4xl sm:text-6xl xl:text-7xl font-bold tracking-tight text-slate-100 leading-[1.06] font-serif-classic">

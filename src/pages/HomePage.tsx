@@ -407,13 +407,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenTrialModal
           
           {/* Step 1 */}
           <div className="p-6 rounded-2xl classic-card group space-y-3 relative">
-            <div className="flex items-center justify-between">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/5 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold text-lg font-serif-classic group-hover:scale-110 transition-transform shadow-md">
-                I
-              </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                Phase 1 • Complimentary
-              </span>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/5 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold text-lg font-serif-classic group-hover:scale-110 transition-transform shadow-md">
+              I
             </div>
             <h3 className="text-lg font-bold text-white font-serif-classic">Diagnosis & Leveling</h3>
             <p className="text-xs text-slate-400 leading-relaxed font-serif-garamond text-sm">
@@ -423,13 +418,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenTrialModal
 
           {/* Step 2 */}
           <div className="p-6 rounded-2xl classic-card group space-y-3 relative">
-            <div className="flex items-center justify-between">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/5 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold text-lg font-serif-classic group-hover:scale-110 transition-transform shadow-md">
-                II
-              </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
-                Phase 2 • Custom Blueprint
-              </span>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/5 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold text-lg font-serif-classic group-hover:scale-110 transition-transform shadow-md">
+              II
             </div>
             <h3 className="text-lg font-bold text-white font-serif-classic">Mastery Instruction</h3>
             <p className="text-xs text-slate-400 leading-relaxed font-serif-garamond text-sm">
@@ -439,13 +429,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenTrialModal
 
           {/* Step 3 */}
           <div className="p-6 rounded-2xl classic-card group space-y-3 relative">
-            <div className="flex items-center justify-between">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/5 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold text-lg font-serif-classic group-hover:scale-110 transition-transform shadow-md">
-                III
-              </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-400 border border-sky-500/30">
-                Phase 3 • Active Sparring
-              </span>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/5 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold text-lg font-serif-classic group-hover:scale-110 transition-transform shadow-md">
+              III
             </div>
             <h3 className="text-lg font-bold text-white font-serif-classic">Classical Sparring</h3>
             <p className="text-xs text-slate-400 leading-relaxed font-serif-garamond text-sm">
@@ -455,13 +440,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenTrialModal
 
           {/* Step 4 */}
           <div className="p-6 rounded-2xl classic-card group space-y-3 relative">
-            <div className="flex items-center justify-between">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/5 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold text-lg font-serif-classic group-hover:scale-110 transition-transform shadow-md">
-                IV
-              </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                Phase 4 • FIDE Surge
-              </span>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/5 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold text-lg font-serif-classic group-hover:scale-110 transition-transform shadow-md">
+              IV
             </div>
             <h3 className="text-lg font-bold text-white font-serif-classic">Tournament Ascendance</h3>
             <p className="text-xs text-slate-400 leading-relaxed font-serif-garamond text-sm">
